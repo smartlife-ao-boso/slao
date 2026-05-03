@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartLife AO BOSO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            display: block;
+            padding: 1rem 0;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        nav a:hover {
+            border-bottom-color: #667eea;
+        }
+
+        .hero {
+            background-color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .hero p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #764ba2;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav a {
+                padding: 0.75rem 0;
+                border-bottom: none;
+                border-left: 3px solid transparent;
+                padding-left: 1rem;
+            }
+
+            nav a:hover {
+                border-left-color: #667eea;
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>SmartLife AO BOSO</h1>
+            <p class="tagline">暮らしをもっとスマートに</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#features">特徴</a></li>
+                <li><a href="#about">について</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <div>
+                        <h2>生活がもっと簡単に</h2>
+                        <p>SmartLife AO BOSOは、日々の生活をシンプルで効率的にするための最新テクノロジーを提供します。</p>
+                        <p>あなたのライフスタイルに合わせてカスタマイズ可能なソリューションで、時間を節約し、生産性を向上させます。</p>
+                        <button class="button">今すぐ始める</button>
+                    </div>
+                    <div style="background-color: #f0f0f0; height: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999;">
+                        [画像プレースホルダー]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container" id="features">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: #333;">主な特徴</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>⚡ 高速</h3>
+                    <p>最新の技術を使用して、最高の性能を実現しています。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔒 安全</h3>
+                    <p>あなたのデータを保護するために、エンタープライズレベルのセキュリティを採用しています。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎨 使いやすい</h3>
+                    <p>シンプルで直感的なインターフェースで、誰でも簡単に使用できます。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📱 レスポンシブ</h3>
+                    <p>スマートフォン、タブレット、デスクトップすべてのデバイスに対応しています。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔧 カスタマイズ</h3>
+                    <p>あなたのニーズに合わせてカスタマイズできる豊富なオプションを提供しています。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🚀 スケーラブル</h3>
+                    <p>ビジネスの成長に合わせてシステムを拡張できます。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SmartLife AO BOSO. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
