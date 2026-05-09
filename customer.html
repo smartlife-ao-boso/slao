@@ -795,7 +795,7 @@ body{
 </div>
 
 <script>
-const EVENTS_JSON_URL = 'events.json';
+const BOSO_GAS_URL = 'https://script.google.com/macros/s/AKfycby8cECPGXC7855kG4Fvqk65RnMz9yPeE8jj3bCxuGLplMIWW0AhdIM2ZCjNPzTXeqFL/exec';
 const events = [];
 
 function setEvents(nextEvents) {
@@ -804,14 +804,15 @@ function setEvents(nextEvents) {
 
 async function loadEventsFromJson() {
     try {
+        if (BOSO_GAS_URL.indexOf('YOUR_') === 0) throw new Error('BOSO_GAS_URL is not configured');
         const response = await fetchEventsJson();
         const data = await response.json();
         const list = Array.isArray(data) ? data : data.events;
-        if (!Array.isArray(list)) throw new Error('events.json must be an array or {events:[...]}');
+        if (!Array.isArray(list)) throw new Error('GAS response must include events array');
         setEvents(list);
         return true;
     } catch (e) {
-        console.warn('events.jsonを読み込めませんでした', e);
+        console.warn('房総GASからイベント情報を読み込めませんでした', e);
         setEvents([]);
         showEventsLoadError(e);
         return false;
@@ -819,7 +820,7 @@ async function loadEventsFromJson() {
 }
 
 async function fetchEventsJson() {
-    const urls = [EVENTS_JSON_URL, EVENTS_JSON_URL + '?v=' + Date.now()];
+    const urls = [BOSO_GAS_URL + '?action=events', BOSO_GAS_URL + '?action=events&v=' + Date.now()];
     let lastError = null;
     for (const url of urls) {
         try {
@@ -830,13 +831,13 @@ async function fetchEventsJson() {
             lastError = e;
         }
     }
-    throw lastError || new Error('events.json fetch failed');
+    throw lastError || new Error('Boso GAS events fetch failed');
 }
 
 function showEventsLoadError(error) {
     const calendar = document.getElementById('calendarView');
     const list = document.getElementById('listView');
-    const message = '<div style="padding:18px;border-radius:16px;background:#fff3e0;border:1px solid #f0c980;color:#7a4c00;text-align:center;">events.jsonを読み込めませんでした。index.html、customer.html、events.jsonを同じフォルダにアップロードし、Webサーバー経由で開いてください。</div>';
+    const message = '<div style="padding:18px;border-radius:16px;background:#fff3e0;border:1px solid #f0c980;color:#7a4c00;text-align:center;">房総GASからイベント情報を読み込めませんでした。BOSO_GAS_URLを房総専用GASのWebアプリURLに設定してください。</div>';
     if (calendar) calendar.innerHTML = message;
     if (list) list.innerHTML = message;
 }

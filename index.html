@@ -776,9 +776,6 @@ body::after {
             </div>
             <button class="btn-submit" id="btnSubmit" onclick="submitReport()">送信する</button>
             <div class="form-message" id="formMessage"></div>
-            <div class="google-form-link">
-                &#x307E;&#x305F;&#x306F; <a href="https://docs.google.com/forms/d/1sS4n-kmNd4BOQdd6BUSe31_cOcXK_k36ok2DuJjN-iA/viewform" target="_blank">Google&#x30D5;&#x30A9;&#x30FC;&#x30E0;</a> &#x304B;&#x3089;&#x3082;&#x5165;&#x529B;&#x3067;&#x304D;&#x307E;&#x3059;
-            </div>
         </div>
 
         <!-- 予約・実績を修正（一番下） -->
@@ -807,7 +804,7 @@ body::after {
 </div>
 <script>
 
-const EVENTS_JSON_URL = 'events.json';
+const BOSO_GAS_URL = 'https://script.google.com/macros/s/AKfycby8cECPGXC7855kG4Fvqk65RnMz9yPeE8jj3bCxuGLplMIWW0AhdIM2ZCjNPzTXeqFL/exec';
 const events = [];
 let customerWindow = null;
 let eventsDirty = false;
@@ -818,14 +815,15 @@ function setEvents(nextEvents) {
 
 async function loadEventsFromJson() {
     try {
+        if (BOSO_GAS_URL.indexOf('YOUR_') === 0) throw new Error('BOSO_GAS_URL is not configured');
         const response = await fetchEventsJson();
         const data = await response.json();
         const list = Array.isArray(data) ? data : data.events;
-        if (!Array.isArray(list)) throw new Error('events.json must be an array or {events:[...]}');
+        if (!Array.isArray(list)) throw new Error('GAS response must include events array');
         setEvents(list);
         return true;
     } catch (e) {
-        console.warn('events.jsonを読み込めませんでした', e);
+        console.warn('房総GASからイベント情報を読み込めませんでした', e);
         setEvents([]);
         showEventsLoadError(e);
         return false;
@@ -833,7 +831,7 @@ async function loadEventsFromJson() {
 }
 
 async function fetchEventsJson() {
-    const urls = [EVENTS_JSON_URL, EVENTS_JSON_URL + '?v=' + Date.now()];
+    const urls = [BOSO_GAS_URL + '?action=events', BOSO_GAS_URL + '?action=events&v=' + Date.now()];
     let lastError = null;
     for (const url of urls) {
         try {
@@ -844,17 +842,28 @@ async function fetchEventsJson() {
             lastError = e;
         }
     }
-    throw lastError || new Error('events.json fetch failed');
+    throw lastError || new Error('Boso GAS events fetch failed');
 }
 
 function showEventsLoadError(error) {
     const calsEl = document.getElementById('calendars');
     if (!calsEl) return;
-    calsEl.innerHTML = '<div style="padding:18px;border-radius:16px;background:#fff3e0;border:1px solid #f0c980;color:#7a4c00;text-align:center;">events.jsonを読み込めませんでした。index.html、customer.html、events.jsonを同じフォルダにアップロードし、Webサーバー経由で開いてください。</div>';
+    calsEl.innerHTML = '<div style="padding:18px;border-radius:16px;background:#fff3e0;border:1px solid #f0c980;color:#7a4c00;text-align:center;">房総GASからイベント情報を読み込めませんでした。BOSO_GAS_URLを房総専用GASのWebアプリURLに設定してください。</div>';
 }
 
 function persistEvents() {
     eventsDirty = true;
+    if (BOSO_GAS_URL.indexOf('YOUR_') === 0) return;
+    fetch(BOSO_GAS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({action: 'saveEvents', events: events})
+    }).then(function() {
+        eventsDirty = false;
+    }).catch(function(e) {
+        console.warn('イベントをGASへ保存できませんでした', e);
+    });
 }
 
 function syncCustomerWindow() {
@@ -1051,11 +1060,11 @@ function closeModal() {
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 
 // ===== 実績報告フォーム =====
-// ** Google Apps ScriptデプロイURL（要設定） **
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwOW_Qi7eqNixtDV-CRn1PRCDi7anA44YhqcTrZJb4nGcnR7yV8HkoTGtyaSJ2LLERUYQ/exec';
-const GAS_RESERVE_URL = 'https://script.google.com/macros/s/AKfycbwZrEBGLSz3D-6OWrpUBXXW05ZxBCYRLBxUY5Evy7OmV84J44xylsiH0Uvxlu12sWjY/exec';
-const GAS_SEMINAR_RESERVE_URL = 'https://script.google.com/macros/s/AKfycbwdPapeI58usT-CWhuTmr_D_nmDEhNdCWp8JaJRNDWE-9tSYbA-0Tzo3uMoqgS0kPv9/exec';
-const GAS_UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbx5BYxCeXz-uTl_erKVjo3XwT8YjOs4Y3aj5ugAmKCzyrLyhtgTHxtX2qO8xJE7jdZe/exec';
+// 房総専用GASにすべて集約
+const GAS_URL = BOSO_GAS_URL;
+const GAS_RESERVE_URL = BOSO_GAS_URL;
+const GAS_SEMINAR_RESERVE_URL = BOSO_GAS_URL;
+const GAS_UPLOAD_URL = BOSO_GAS_URL;
 
 let currentEvent = null;
 
@@ -1071,7 +1080,7 @@ function toggleForm() {
 
 function fetchReportResult() {
     var eventName = currentEvent.date + ' ' + currentEvent.venue + ' ' + currentEvent.title;
-    var url = GAS_URL + '?event=' + encodeURIComponent(eventName);
+    var url = GAS_URL + '?action=reports&event=' + encodeURIComponent(eventName);
     var resultEl = document.getElementById('reportResult');
     var contentEl = document.getElementById('reportResultContent');
     resultEl.style.display = 'none';
@@ -1099,6 +1108,7 @@ function submitReport() {
     btn.textContent = '送信中...';
 
     const data = {
+        action: 'reportAdd',
         eventName: currentEvent.date + ' ' + currentEvent.venue + ' ' + currentEvent.title,
         groupCount: document.getElementById('fGroupCount').value,
         participantCount: document.getElementById('fParticipantCount').value,
@@ -1220,6 +1230,7 @@ function submitReserve() {
     btn.textContent = '\u9001\u4FE1\u4E2D...';
 
     const data = {
+        action: 'reserveAdd',
         plannerName: document.getElementById('rPlannerName').value,
         groupCount: document.getElementById('rGroupCount').value,
         participantCount: document.getElementById('rParticipantCount').value,
@@ -1287,7 +1298,7 @@ loadAllReserveCounts();
 function checkUploadedFile(ev) {
     if (GAS_UPLOAD_URL.indexOf('YOUR_') === 0) return;
     var folderName = ev.date.replace(/\//g, '-') + '_' + ev.title + '_' + ev.venue;
-    var url = GAS_UPLOAD_URL + '?folder=' + encodeURIComponent(folderName);
+    var url = GAS_UPLOAD_URL + '?action=uploadedFile&folder=' + encodeURIComponent(folderName);
     fetch(url)
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -1309,11 +1320,11 @@ function checkUploadedFile(ev) {
 // ===== プレゼン資料アップロード =====
 function uploadPresentation(input) {
     if (!input.files || !input.files[0]) return;
-    if (GAS_UPLOAD_URL === 'YOUR_UPLOAD_GAS_URL_HERE') {
+    if (GAS_UPLOAD_URL.indexOf('YOUR_') === 0) {
         var s = document.getElementById('uploadSuccess');
         s.className = 'upload-success show';
         s.style.background = '#fce4ec'; s.style.color = '#c62828';
-        s.textContent = '❌ アップロードURLが未設定です。GASの設定を確認してください。';
+        s.textContent = '❌ 房総GAS URLが未設定です。BOSO_GAS_URLを設定してください。';
         return;
     }
     var file = input.files[0];
@@ -1324,6 +1335,7 @@ function uploadPresentation(input) {
     reader.onload = function(e) {
         var base64 = e.target.result.split(',')[1];
         var data = {
+            action: 'uploadPresentation',
             fileName: file.name,
             mimeType: file.type,
             base64: base64,
@@ -1425,7 +1437,7 @@ function fetchAdminReserveData() {
     // 実績データも取得
     var reportPanel = document.getElementById('adminReportList');
     reportPanel.innerHTML = '<div style="color:#999;padding:8px;">読み込み中...</div>';
-    fetch(GAS_URL + '?event=' + encodeURIComponent(eventName) + '&adminList=true')
+    fetch(GAS_URL + '?action=reports&event=' + encodeURIComponent(eventName) + '&adminList=true')
       .then(function(r) { return r.json(); })
       .then(function(data) {
           if (!data.records || data.records.length === 0) {
@@ -1750,13 +1762,12 @@ function addNewEvent() {
 }
 
 function exportEvents() {
-    const json = JSON.stringify(events, null, 2);
-    const blob = new Blob([json], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'events.json'; a.click();
-    URL.revokeObjectURL(url);
-    eventsDirty = false;
+    if (BOSO_GAS_URL.indexOf('YOUR_') === 0) {
+        alert('BOSO_GAS_URLが未設定です。房総専用GASのWebアプリURLを設定してください。');
+        return;
+    }
+    persistEvents();
+    alert('房総GASへ保存しました');
 }
 
 window.addEventListener('beforeunload', (e) => {
@@ -1779,12 +1790,12 @@ window.addEventListener('beforeunload', (e) => {
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
                 <button onclick="addNewEvent()" style="background:#fff;color:#8b6aae;border:none;border-radius:14px;padding:7px 16px;font-size:13px;cursor:pointer;font-weight:700;font-family:inherit;">＋ 追加</button>
                 <button onclick="openCustomerView()" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:14px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:inherit;">カスタマー表示</button>
-                <button onclick="exportEvents()" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:14px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:inherit;">events.jsonを書き出し</button>
+                <button onclick="exportEvents()" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:14px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:inherit;">GASへ保存</button>
                 <button onclick="adminLogout()" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:14px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:inherit;">ログアウト</button>
             </div>
         </div>
         <div style="padding:10px 18px;background:#f7fbf9;border-bottom:1px solid rgba(33,77,64,0.08);font-size:12px;color:#58766d;">
-            編集後は「events.jsonを書き出し」で保存し、公開サーバーの events.json を上書きしてください。
+            編集内容は房総GASへ保存されます。反映されない場合は「GASへ保存」を押してください。
         </div>
         <div id="adminEventList" style="max-height:500px;overflow-y:auto;"></div>
     </div>
