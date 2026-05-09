@@ -1,247 +1,1846 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartLife AO BOSO</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
-        }
-
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .tagline {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        nav {
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
-
-        nav a {
-            display: block;
-            padding: 1rem 0;
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            border-bottom: 3px solid transparent;
-            transition: border-color 0.3s;
-        }
-
-        nav a:hover {
-            border-bottom-color: #667eea;
-        }
-
-        .hero {
-            background-color: white;
-            padding: 4rem 0;
-            margin-bottom: 2rem;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .hero h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
-
-        .hero p {
-            margin-bottom: 1rem;
-            color: #666;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 500;
-            transition: background-color 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .button:hover {
-            background-color: #764ba2;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .feature-card {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .feature-card h3 {
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        @media (max-width: 768px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            nav a {
-                padding: 0.75rem 0;
-                border-bottom: none;
-                border-left: 3px solid transparent;
-                padding-left: 1rem;
-            }
-
-            nav a:hover {
-                border-left-color: #667eea;
-                border-bottom: none;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>房総地域 2026年度 イベントカレンダー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #f4fbf8;
+    --bg-deep: #dcefe6;
+    --panel: rgba(255, 255, 255, 0.82);
+    --panel-strong: rgba(255, 255, 255, 0.94);
+    --line: rgba(33, 77, 64, 0.12);
+    --text: #17352d;
+    --muted: #58766d;
+    --heading: #123229;
+    --accent: #10a37f;
+    --accent-strong: #0b7a60;
+    --accent-soft: #d8f3ec;
+    --sea: #78c9d4;
+    --sand: #f0dfc2;
+    --sunset: #efb48f;
+    --shadow: 0 22px 56px rgba(18, 50, 41, 0.12);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "Noto Sans JP", "Hiragino Sans", sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(120, 201, 212, 0.28), transparent 28%),
+        radial-gradient(circle at top right, rgba(239, 180, 143, 0.22), transparent 26%),
+        linear-gradient(180deg, #f8fffc 0%, #edf8f3 42%, #e8f3f0 100%);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    position: relative;
+}
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    inset: auto;
+    border-radius: 999px;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(10px);
+}
+body::before {
+    width: 320px;
+    height: 320px;
+    top: 90px;
+    right: -120px;
+    background: rgba(120, 201, 212, 0.16);
+}
+body::after {
+    width: 260px;
+    height: 260px;
+    bottom: 80px;
+    left: -80px;
+    background: rgba(239, 180, 143, 0.14);
+}
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 28px 22px 40px;
+}
+.hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, rgba(8, 36, 29, 0.96) 0%, rgba(14, 70, 56, 0.92) 58%, rgba(33, 115, 96, 0.9) 100%);
+    color: #f5fffb;
+    padding: 34px 34px 30px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: -20% auto auto 58%;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(120, 201, 212, 0.28), transparent 68%);
+}
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: auto auto -110px -80px;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(240, 223, 194, 0.18), transparent 72%);
+}
+.hero-kicker {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #d8fef5;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(12px);
+}
+.hero h1 {
+    position: relative;
+    font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+    font-size: clamp(34px, 5vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+    color: #f7fffc;
+}
+.hero p {
+    position: relative;
+    max-width: 720px;
+    font-size: 15px;
+    color: rgba(240, 255, 249, 0.84);
+}
+.hero-meta {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+.hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #edfffa;
+    font-size: 12px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+}
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 18px 20px;
+    background: var(--panel);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 12px 30px rgba(19, 52, 43, 0.08);
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+}
+.legend-dot {
+    width: 24px;
+    height: 10px;
+    border-radius: 999px;
+}
+.month-nav {
+    position: sticky;
+    top: 12px;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    padding: 10px;
+    border-radius: 22px;
+    background: rgba(244, 251, 248, 0.74);
+    backdrop-filter: blur(16px);
+}
+.month-btn {
+    padding: 11px 18px;
+    min-width: 100px;
+    border: 1px solid rgba(16, 163, 127, 0.12);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.76);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.24s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    box-shadow: 0 8px 18px rgba(16, 52, 43, 0.05);
+}
+.month-btn .month-en { font-size: 13px; letter-spacing: 0.02em; }
+.month-btn .month-ja {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 10px;
+    opacity: 0.68;
+}
+.month-btn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(16, 163, 127, 0.25);
+    color: var(--heading);
+}
+.month-btn.active {
+    background: linear-gradient(135deg, #123229 0%, #10a37f 100%);
+    color: #f5fffb;
+    border-color: transparent;
+    box-shadow: 0 14px 26px rgba(16, 163, 127, 0.24);
+}
+.calendar-section { display: none; margin-bottom: 30px; }
+.calendar-section.active { display: block; animation: fadeIn 0.35s ease; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.calendar-title {
+    text-align: center;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cal-month-en {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--heading);
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+.cal-month-ja {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 6px;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    padding: 1px;
+    background: rgba(19, 52, 43, 0.08);
+    border-radius: 26px;
+    overflow: hidden;
+    border: 1px solid rgba(19, 52, 43, 0.08);
+    box-shadow: 0 18px 44px rgba(19, 52, 43, 0.08);
+}
+.day-header {
+    background: rgba(248, 253, 251, 0.9);
+    color: #5a7b71;
+    text-align: center;
+    padding: 11px 5px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+}
+.day-header.sun { color: #c56d57; background: rgba(255, 246, 241, 0.92); }
+.day-header.sat { color: #2f7c90; background: rgba(240, 251, 255, 0.92); }
+.day-cell {
+    background: rgba(255, 255, 255, 0.92);
+    min-height: 168px;
+    padding: 8px 6px;
+    transition: background 0.2s, transform 0.2s;
+}
+.day-cell:hover {
+    background: #ffffff;
+}
+.day-cell.empty {
+    background: rgba(243, 250, 247, 0.82);
+    min-height: 56px;
+}
+.day-cell.sun-bg { background: linear-gradient(180deg, rgba(255, 248, 245, 0.96), rgba(255, 255, 255, 0.92)); }
+.day-cell.sat-bg { background: linear-gradient(180deg, rgba(243, 252, 255, 0.96), rgba(255, 255, 255, 0.92)); }
+.day-number {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #6f8b83;
+    margin-bottom: 6px;
+    text-align: right;
+    padding-right: 4px;
+}
+.day-cell.sun-bg .day-number { color: #c56d57; }
+.day-cell.sat-bg .day-number { color: #2f7c90; }
+.event-chip {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 7px 8px;
+    margin-bottom: 5px;
+    border-radius: 12px;
+    font-size: 11px;
+    line-height: 1.42;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+    border: 1px solid transparent;
+}
+.event-chip:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(19, 52, 43, 0.08);
+}
+.chip-icon { flex-shrink: 0; font-size: 11px; margin-top: 1px; }
+.chip-text { word-break: break-word; }
+.chip-venue { font-size: 8px; opacity: 0.7; margin-left: 2px; }
+.chip-reserve {
+    display: inline-block;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    padding: 1px 6px;
+    border-radius: 999px;
+    margin-left: 4px;
+    white-space: nowrap;
+}
+.event-chip.tomisato { background: #fdf4ea; border-color: rgba(233, 168, 103, 0.28); }
+.event-chip.narita { background: #ecf8fb; border-color: rgba(74, 165, 186, 0.24); }
+.event-chip.kamagaya { background: #edf8f1; border-color: rgba(93, 163, 122, 0.22); }
+.event-chip.chibant { background: #f2f7ff; border-color: rgba(96, 131, 196, 0.22); }
+.event-chip.other { background: #f3f7f6; border-color: rgba(88, 118, 109, 0.16); }
+.event-chip.genre-ai { color: #0b6d8a; }
+.event-chip.genre-security { color: #9c3f37; }
+.event-chip.genre-business { color: #2d7d4c; }
+.event-chip.genre-photo { color: #a56a1f; }
+.event-chip.genre-esports { color: #6c46b3; }
+.event-chip.seminar {
+    border-radius: 999px;
+    font-weight: 700;
+    padding: 7px 12px;
+    border-width: 1px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.event-chip.seminar.tomisato { background: linear-gradient(135deg, #fff6ec, #fbe8cf); color: #8c5820; }
+.event-chip.seminar.narita { background: linear-gradient(135deg, #eef9fc, #dff3f8); color: #2d6f81; }
+.event-chip.seminar.kamagaya { background: linear-gradient(135deg, #f1fbf3, #dff1e5); color: #2d7246; }
+.event-chip.seminar.chibant { background: linear-gradient(135deg, #f3f7ff, #e4ecfb); color: #385f9c; }
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 30, 24, 0.38);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 26px;
+    padding: 28px;
+    max-width: 580px;
+    width: min(92vw, 580px);
+    max-height: 84vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 24px 60px rgba(14, 46, 38, 0.24);
+    border: 1px solid rgba(19, 52, 43, 0.08);
+    animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.97) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #7c968f;
+    background: none;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+.modal-close:hover { background: #eef7f3; color: var(--heading); }
+.modal h2 {
+    font-size: 18px;
+    color: var(--heading);
+    margin-bottom: 8px;
+    padding-right: 35px;
+    line-height: 1.45;
+    font-weight: 700;
+}
+.modal-circle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+.modal-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: linear-gradient(135deg, #f5fcf8, #edf7f3);
+    padding: 16px;
+    border-radius: 18px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(16, 163, 127, 0.08);
+}
+.modal-meta > div { display: flex; flex-direction: column; gap: 2px; }
+.meta-label {
+    font-size: 10px;
+    color: #759087;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+.meta-value {
+    font-size: 14px;
+    color: var(--heading);
+    font-weight: 500;
+}
+.modal-links { display: flex; gap: 10px; margin-top: 5px; }
+.modal-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 22px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    transition: all 0.2s;
+    flex: 1;
+    justify-content: center;
+}
+.modal-links a:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(19, 52, 43, 0.08); }
+.btn-report { background: linear-gradient(135deg, #eff8f4, #dff2eb); color: #196852; }
+.btn-pres { background: linear-gradient(135deg, #fff5ea, #f9e6d0); color: #9b622a; }
+.report-form {
+    margin-top: 18px;
+    border-top: 1px solid rgba(19, 52, 43, 0.08);
+    padding-top: 16px;
+}
+.report-form h3 {
+    font-size: 14px;
+    color: var(--heading);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.form-row.full { grid-template-columns: 1fr; }
+.form-group label {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(19, 52, 43, 0.12);
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--text);
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fbfefd;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: rgba(16, 163, 127, 0.45);
+    box-shadow: 0 0 0 4px rgba(16, 163, 127, 0.1);
+}
+.form-group textarea { resize: vertical; min-height: 60px; }
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #91a8a1;
+    font-size: 12px;
+}
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 14px;
+    background: linear-gradient(135deg, #123229, #10a37f);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-submit:hover { transform: translateY(-1px); box-shadow: 0 10px 18px rgba(16, 163, 127, 0.22); }
+.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+.form-message {
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+}
+.form-message.success { display: block; background: #eaf8f0; color: #246847; }
+.form-message.error { display: block; background: #fff2ef; color: #b64f43; }
+.btn-toggle-form {
+    display: block;
+    width: 100%;
+    padding: 11px 12px;
+    margin-top: 12px;
+    background: linear-gradient(135deg, #f3fbf7, #e8f5ef);
+    color: var(--heading);
+    border: 1px solid rgba(19, 52, 43, 0.1);
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-toggle-form:hover { background: linear-gradient(135deg, #edf9f4, #dff2ea); }
+.google-form-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 11px;
+    color: #759087;
+}
+.google-form-link a { color: var(--accent-strong); text-decoration: underline; }
+.upload-section { margin-top: 14px; }
+.btn-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #fff8ef, #f8ead5);
+    color: #91602e;
+    border: 1px dashed rgba(145, 96, 46, 0.28);
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-upload-label:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(145, 96, 46, 0.12); }
+.upload-progress {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    display: none;
+}
+.upload-progress.show { display: block; }
+.upload-success {
+    color: #246847;
+    background: #eaf8f0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-top: 8px;
+    display: none;
+    text-align: center;
+}
+.upload-success.show { display: block; }
+.footer {
+    text-align: center;
+    padding: 26px 18px 14px;
+    color: #6e877f;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+}
+@media (max-width: 900px) {
+    .container { padding: 18px 12px 28px; }
+    .hero { padding: 24px 18px 22px; border-radius: 24px; }
+    .hero h1 { font-size: 30px; }
+    .hero p { font-size: 14px; }
+    .legend { padding: 14px; gap: 10px 14px; }
+    .month-nav { top: 8px; padding: 8px; }
+    .month-btn { min-width: 86px; padding: 10px 12px; }
+    .calendar-grid { border-radius: 18px; }
+    .day-cell { min-height: 92px; padding: 4px; }
+    .event-chip { font-size: 8px; padding: 3px 4px; border-radius: 8px; }
+    .chip-icon { font-size: 9px; }
+    .day-number { font-size: 12px; }
+    .modal { padding: 22px 16px; width: 94vw; }
+    .modal-meta,
+    .form-row { grid-template-columns: 1fr; }
+    .modal-links { flex-direction: column; }
+}
+</style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>SmartLife AO BOSO</h1>
-            <p class="tagline">暮らしをもっとスマートに</p>
+<div class="container">
+    <div class="hero">
+        <div class="hero-kicker">BOSO LEARNING CIRCLES 2026</div>
+        <h1>房総地域<br>2026 Event Calendar</h1>
+        <p>&#x5B66;&#x3073;&#x306E;&#x30B5;&#x30FC;&#x30AF;&#x30EB;&#x6D3B;&#x52D5; 2026&#x5E74;&#x5EA6;</p>
+        <div class="hero-meta">
+            <div class="hero-pill">市原キャンパス</div>
+            <div class="hero-pill">管理者用スケジュール編集</div>
         </div>
-    </header>
+    </div>
 
-    <nav>
-        <div class="container">
-            <ul>
-                <li><a href="#home">ホーム</a></li>
-                <li><a href="#features">特徴</a></li>
-                <li><a href="#about">について</a></li>
-                <li><a href="#contact">お問い合わせ</a></li>
-            </ul>
+    <div class="legend">
+        <div class="legend-item" style="margin-right:8px;font-weight:600;color:#9a8aaa;">&#x2591; &#x80CC;&#x666F;=&#x4F1A;&#x5834;</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ecf8fb;border:1px solid #4aa5ba;"></div>&#x1F30A; 市原キャンパス</div>
+        <div style="width:1px;height:20px;background:#e0d8e8;margin:0 6px;"></div>
+        <div class="legend-item" style="margin-right:8px;font-weight:600;color:#9a8aaa;">A &#x6587;&#x5B57;=&#x30B8;&#x30E3;&#x30F3;&#x30EB;</div>
+        <div class="legend-item"><span style="color:#2868a8;font-weight:700;">&#x25CF;</span> AI&#x304F;&#x3089;&#x3057;&#x6D3B;&#x7528;</div>
+        <div class="legend-item"><span style="color:#b83838;font-weight:700;">&#x25CF;</span> &#x30C7;&#x30B8;&#x30BF;&#x30EB;&#x5B89;&#x5168;</div>
+        <div class="legend-item"><span style="color:#1a7a40;font-weight:700;">&#x25CF;</span> &#x5546;&#x5E97;&#x4E3B;&#x30FB;&#x4E8B;&#x696D;&#x4E3B;</div>
+        <div class="legend-item"><span style="color:#b87818;font-weight:700;">&#x25CF;</span> &#x5199;&#x771F;&#x30E1;&#x30C7;&#x30A3;&#x30A2;</div>
+        <div class="legend-item"><span style="color:#7838a8;font-weight:700;">&#x25CF;</span> E-Sports</div>
+        <div style="width:1px;height:20px;background:#e0d8e8;margin:0 6px;"></div>
+        <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(135deg,#fef9e7,#fdf2d0);border:2px solid #d4a017;"></div>⭐ セミナー・体験会</div>
+    </div>
+
+    <div class="month-nav" id="monthNav"></div>
+    <div id="calendars"></div>
+    <div class="footer"><p>&#x2727; &#x623F;&#x7DCF;&#x5730;&#x57DF; &#x5B66;&#x3073;&#x306E;&#x30B5;&#x30FC;&#x30AF;&#x30EB;&#x6D3B;&#x52D5; 2026&#x5E74;&#x5EA6; &#x2727;</p></div>
+</div>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <h2 id="modalTitle"></h2>
+        <div class="modal-circle" id="modalCircle"></div>
+        <div class="modal-meta" id="modalMeta"></div>
+        <div class="modal-links" id="modalLinks"></div>
+        <div id="reportResult" style="background:linear-gradient(135deg,#f3eef6,#ede5f2);padding:14px 16px;border-radius:14px;margin-top:14px;font-size:13px;color:#6a5a80;display:none;border:1.5px solid #e4d8ee;">
+            <div style="font-size:12px;color:#8a70a8;margin-bottom:8px;font-weight:600;">✅ 実績報告済み</div>
+            <div id="reportResultContent"></div>
         </div>
-    </nav>
-
-    <main>
-        <section class="hero" id="home">
-            <div class="container">
-                <div class="hero-content">
-                    <div>
-                        <h2>生活がもっと簡単に</h2>
-                        <p>SmartLife AO BOSOは、日々の生活をシンプルで効率的にするための最新テクノロジーを提供します。</p>
-                        <p>あなたのライフスタイルに合わせてカスタマイズ可能なソリューションで、時間を節約し、生産性を向上させます。</p>
-                        <button class="button">今すぐ始める</button>
-                    </div>
-                    <div style="background-color: #f0f0f0; height: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999;">
-                        [画像プレースホルダー]
-                    </div>
+        <div class="upload-section">
+            <label class="btn-upload-label" for="fileUpload">📎 プレゼン資料をアップロード</label>
+            <input type="file" id="fileUpload" accept=".pdf,.pptx,.ppt,.key" style="display:none;" onchange="uploadPresentation(this)">
+            <div class="upload-progress" id="uploadProgress">📤 アップロード中...</div>
+            <div class="upload-success" id="uploadSuccess"></div>
+        </div>
+        <button class="btn-toggle-form" onclick="toggleReserveForm()" style="background:linear-gradient(135deg,#e8f5e9,#e0f0e4);color:#4a8a60;border-color:#c0e0c8;">📋 参加予約を入力する</button>
+        <div class="report-form" id="reserveForm" style="display:none;">
+            <h3 style="color:#4a8a60;">&#x1F4CB; 参加予約</h3>
+            <div id="currentTotal" style="background:linear-gradient(135deg,#e8f5e9,#f1f8f2);padding:12px 16px;border-radius:12px;margin-bottom:12px;font-size:13px;color:#4a8a60;display:none;">
+                <div style="font-size:11px;color:#80a890;margin-bottom:4px;">現在の合計</div>
+                <span id="totalGroupsDisplay">-</span>組 / <span id="totalPeopleDisplay">-</span>人
+                <div id="reserverNames" style="margin-top:6px;padding-top:6px;border-top:1px dashed #c0e0c8;display:none;">
+                    <div style="font-size:11px;color:#80a890;margin-bottom:4px;">予約プランナー</div>
+                    <div id="reserverNamesList" style="font-size:12px;line-height:1.6;"></div>
+                </div>
+                <div id="afterTotal" style="margin-top:6px;padding-top:6px;border-top:1px dashed #c0e0c8;display:none;">
+                    <div style="font-size:11px;color:#80a890;margin-bottom:4px;">→ 送信後の合計</div>
+                    <strong><span id="afterGroupsDisplay">-</span>組 / <span id="afterPeopleDisplay">-</span>人</strong>
                 </div>
             </div>
-        </section>
-
-        <section class="container" id="features">
-            <h2 style="text-align: center; margin-bottom: 3rem; color: #333;">主な特徴</h2>
-            <div class="features">
-                <div class="feature-card">
-                    <h3>⚡ 高速</h3>
-                    <p>最新の技術を使用して、最高の性能を実現しています。</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🔒 安全</h3>
-                    <p>あなたのデータを保護するために、エンタープライズレベルのセキュリティを採用しています。</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🎨 使いやすい</h3>
-                    <p>シンプルで直感的なインターフェースで、誰でも簡単に使用できます。</p>
-                </div>
-                <div class="feature-card">
-                    <h3>📱 レスポンシブ</h3>
-                    <p>スマートフォン、タブレット、デスクトップすべてのデバイスに対応しています。</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🔧 カスタマイズ</h3>
-                    <p>あなたのニーズに合わせてカスタマイズできる豊富なオプションを提供しています。</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🚀 スケーラブル</h3>
-                    <p>ビジネスの成長に合わせてシステムを拡張できます。</p>
+            <div class="form-row full">
+                <div class="form-group">
+                    <label>プランナー名</label>
+                    <input type="text" id="rPlannerName" placeholder="あなたの名前を入力">
                 </div>
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 SmartLife AO BOSO. All rights reserved.</p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>参加予定組数</label>
+                    <input type="number" id="rGroupCount" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>参加予定人数</label>
+                    <input type="number" id="rParticipantCount" placeholder="0">
+                </div>
+            </div>
+            <div class="form-row full">
+                <div class="form-group">
+                    <label>見込みアセット</label>
+                    <input type="text" id="rAsset" placeholder="見込みアセットを入力">
+                </div>
+            </div>
+            <button class="btn-submit" id="btnReserve" onclick="submitReserve()" style="background:linear-gradient(135deg,#80c8a0,#60b888);">&#x9001;&#x4FE1;&#x3059;&#x308B;</button>
+            <div class="form-message" id="reserveMessage"></div>
         </div>
-    </footer>
+        <button class="btn-toggle-form" onclick="toggleForm()">&#x1F4DD; &#x5B9F;&#x7E3E;&#x5831;&#x544A;&#x3092;&#x5165;&#x529B;&#x3059;&#x308B;</button>
+        <div class="report-form" id="reportForm" style="display:none;">
+            <h3>📋 実績報告</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>参加組数</label>
+                    <input type="number" id="fGroupCount" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>参加人数</label>
+                    <input type="number" id="fParticipantCount" placeholder="0">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>VC件数</label>
+                    <input type="number" id="fVcCount" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>アセット実績数</label>
+                    <input type="number" id="fAssetCount" placeholder="0">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>うちPC数</label>
+                    <input type="number" id="fPcCount" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>うちiPhone数</label>
+                    <input type="number" id="fIphoneCount" placeholder="0">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>その他数</label>
+                    <input type="number" id="fOtherCount" placeholder="0">
+                </div>
+                <div class="form-group"></div>
+            </div>
+            <div class="form-row full">
+                <div class="form-group">
+                    <label>課題</label>
+                    <textarea id="fIssues" placeholder="課題を入力"></textarea>
+                </div>
+            </div>
+            <div class="form-row full">
+                <div class="form-group">
+                    <label>対策</label>
+                    <textarea id="fMeasures" placeholder="対策を入力"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>講師名</label>
+                    <input type="text" id="fInstructor" placeholder="講師名">
+                </div>
+                <div class="form-group">
+                    <label>プランナー数</label>
+                    <input type="number" id="fPlannerCount" placeholder="0">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>人件費</label>
+                    <input type="number" id="fPlannerCost" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>その他開催費</label>
+                    <input type="number" id="fOtherCost" placeholder="0">
+                </div>
+            </div>
+            <button class="btn-submit" id="btnSubmit" onclick="submitReport()">送信する</button>
+            <div class="form-message" id="formMessage"></div>
+            <div class="google-form-link">
+                &#x307E;&#x305F;&#x306F; <a href="https://docs.google.com/forms/d/1sS4n-kmNd4BOQdd6BUSe31_cOcXK_k36ok2DuJjN-iA/viewform" target="_blank">Google&#x30D5;&#x30A9;&#x30FC;&#x30E0;</a> &#x304B;&#x3089;&#x3082;&#x5165;&#x529B;&#x3067;&#x304D;&#x307E;&#x3059;
+            </div>
+        </div>
+
+        <!-- 予約・実績を修正（一番下） -->
+        <div id="myFixPanel" style="margin-top:14px;">
+            <button class="btn-toggle-form" onclick="toggleMyFix()" style="background:linear-gradient(135deg,#fff3e0,#fff8ee);color:#e65100;border-color:#ffe0b2;">🔧 予約・実績を修正する</button>
+            <div id="myFixInner" style="display:none;margin-top:10px;">
+                <div id="myNameInputArea" style="margin-bottom:12px;display:none;">
+                    <label style="font-size:12px;color:#a090b0;display:block;margin-bottom:4px;">あなたの名前を入力してください</label>
+                    <div style="display:flex;gap:8px;">
+                        <input type="text" id="myFixName" placeholder="例：佐藤" style="flex:1;padding:10px 12px;border:1.5px solid #e0d8e8;border-radius:12px;font-size:15px;font-family:inherit;background:#faf8fc;">
+                        <button onclick="loadMyRecords()" style="padding:10px 18px;background:linear-gradient(135deg,#c9a7d8,#a7bce8);color:#fff;border:none;border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:700;">表示</button>
+                    </div>
+                </div>
+                <div style="background:linear-gradient(135deg,#fff3e0,#fff8ee);border:1.5px solid #ffe0b2;border-radius:14px;padding:14px;margin-bottom:10px;">
+                    <div style="font-size:13px;font-weight:700;color:#e65100;margin-bottom:8px;">📋 予約データ</div>
+                    <div id="adminReserveList" style="max-height:250px;overflow-y:auto;"></div>
+                </div>
+                <div style="background:linear-gradient(135deg,#f3eef6,#ede5f2);border:1.5px solid #e4d8ee;border-radius:14px;padding:14px;">
+                    <div style="font-size:13px;font-weight:700;color:#6a5a80;margin-bottom:8px;">📋 実績データ</div>
+                    <div id="adminReportList" style="max-height:250px;overflow-y:auto;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+const EVENTS_JSON_URL = 'events.json';
+const events = [];
+let customerWindow = null;
+let eventsDirty = false;
+
+function setEvents(nextEvents) {
+    events.splice(0, events.length, ...nextEvents);
+}
+
+async function loadEventsFromJson() {
+    try {
+        const response = await fetchEventsJson();
+        const data = await response.json();
+        const list = Array.isArray(data) ? data : data.events;
+        if (!Array.isArray(list)) throw new Error('events.json must be an array or {events:[...]}');
+        setEvents(list);
+        return true;
+    } catch (e) {
+        console.warn('events.jsonを読み込めませんでした', e);
+        setEvents([]);
+        showEventsLoadError(e);
+        return false;
+    }
+}
+
+async function fetchEventsJson() {
+    const urls = [EVENTS_JSON_URL, EVENTS_JSON_URL + '?v=' + Date.now()];
+    let lastError = null;
+    for (const url of urls) {
+        try {
+            const response = await fetch(url, {cache: 'no-store'});
+            if (response.ok) return response;
+            lastError = new Error(url + ': ' + response.status + ' ' + response.statusText);
+        } catch (e) {
+            lastError = e;
+        }
+    }
+    throw lastError || new Error('events.json fetch failed');
+}
+
+function showEventsLoadError(error) {
+    const calsEl = document.getElementById('calendars');
+    if (!calsEl) return;
+    calsEl.innerHTML = '<div style="padding:18px;border-radius:16px;background:#fff3e0;border:1px solid #f0c980;color:#7a4c00;text-align:center;">events.jsonを読み込めませんでした。index.html、customer.html、events.jsonを同じフォルダにアップロードし、Webサーバー経由で開いてください。</div>';
+}
+
+function persistEvents() {
+    eventsDirty = true;
+}
+
+function syncCustomerWindow() {
+    if (!customerWindow || customerWindow.closed) return;
+    customerWindow.postMessage({
+        type: 'slmc-boso-events',
+        events: events
+    }, '*');
+}
+
+function openCustomerView() {
+    customerWindow = window.open('customer.html', 'slmcBosoCustomer');
+    let attempts = 0;
+    const timer = setInterval(() => {
+        attempts += 1;
+        syncCustomerWindow();
+        if (attempts >= 10 || !customerWindow || customerWindow.closed) {
+            clearInterval(timer);
+        }
+    }, 300);
+}
+
+loadEventsFromJson().then((loaded) => {
+    if (!loaded) return;
+    rebuildAll();
+    if (isAdmin) renderAdminList();
+});
+
+function venueClass(v) {
+    if (v.includes('市原')) return 'narita';
+    if (v.includes('\u5bcc\u91cc')) return 'tomisato';
+    if (v.includes('\u6210\u7530')) return 'narita';
+    if (v.includes('\u938c\u30f6\u8c37') || v.includes('\u938c\u30b1\u8c37')) return 'kamagaya';
+    if (v.includes('\u5343\u8449NT') || v.includes('NT')) return 'chibant';
+    return 'other';
+}
+
+function genreClass(c) {
+    if (c.includes('\u5b89\u5168')) return 'genre-security';
+    if (c.includes('\u5546\u5e97') || c.includes('\u4e8b\u696d\u4e3b')) return 'genre-business';
+    if (c.includes('\u5199\u771f') || c.includes('\u30e1\u30c7\u30a3\u30a2')) return 'genre-photo';
+    if (c.includes('Sports')) return 'genre-esports';
+    if (c.includes('\u30c7\u30b8\u30bf\u30eb\u6d3b\u7528')) return 'genre-ai';
+    if (c.includes('AI')) return 'genre-ai';
+    return 'genre-ai';
+}
+
+function venueIcon(v) {
+    if (v.includes('\u5bcc\u91cc')) return '\u{1F338}';
+    if (v.includes('\u6210\u7530')) return '\u{1F40C}';
+    if (v.includes('\u938c\u30f6\u8c37') || v.includes('\u938c\u30b1\u8c37')) return '\u{1F33C}';
+    if (v.includes('\u5343\u8449NT') || v.includes('NT')) return '\u{1F3D9}';
+    return '\u2605';
+}
+
+const monthNames = {4:'April',5:'May',6:'June',7:'July',8:'August',9:'September'};
+const monthNamesJa = {4:'4\u6708',5:'5\u6708',6:'6\u6708',7:'7\u6708',8:'8\u6708',9:'9\u6708'};
+const dayLabels = ['\u6708','\u706B','\u6C34','\u6728','\u91D1','\u571F','\u65E5'];
+const months = [4,5,6,7,8,9];
+
+const navEl = document.getElementById('monthNav');
+months.forEach((m, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'month-btn' + (i===0?' active':'');
+    btn.innerHTML = '<span class="month-en">' + monthNames[m] + '</span><span class="month-ja">' + monthNamesJa[m] + '</span>';
+    btn.onclick = () => showMonth(m);
+    navEl.appendChild(btn);
+});
+
+const calsEl = document.getElementById('calendars');
+months.forEach((month, i) => {
+    const sec = document.createElement('div');
+    sec.className = 'calendar-section' + (i===0?' active':'');
+    sec.id = 'month-' + month;
+
+    const t = document.createElement('div');
+    t.className = 'calendar-title';
+    t.innerHTML = '<span class="cal-month-en">' + monthNames[month] + '</span><span class="cal-month-ja">2026\u5E74 ' + monthNamesJa[month] + '</span>';
+    sec.appendChild(t);
+
+    const grid = document.createElement('div');
+    grid.className = 'calendar-grid';
+
+    dayLabels.forEach((d, di) => {
+        const h = document.createElement('div');
+        h.className = 'day-header' + (di===6?' sun':'') + (di===5?' sat':'');
+        h.textContent = d;
+        grid.appendChild(h);
+    });
+
+    const firstDay = new Date(2026, month-1, 1);
+    const lastDate = new Date(2026, month, 0).getDate();
+    const startDow = (firstDay.getDay() + 6) % 7; // 月曜=0, 日曜=6
+
+    const me = {};
+    events.forEach(ev => {
+        const d = new Date(ev.date);
+        if (d.getMonth()+1 === month) {
+            const day = d.getDate();
+            if (!me[day]) me[day] = [];
+            me[day].push(ev);
+        }
+    });
+
+    for (let i = 0; i < startDow; i++) {
+        const c = document.createElement('div');
+        c.className = 'day-cell empty';
+        grid.appendChild(c);
+    }
+
+    for (let d = 1; d <= lastDate; d++) {
+        const dow = (startDow + d - 1) % 7; // 月曜=0, 日曜=6
+        const c = document.createElement('div');
+        c.className = 'day-cell' + (dow===6?' sun-bg':'') + (dow===5?' sat-bg':'');
+
+        const num = document.createElement('div');
+        num.className = 'day-number';
+        num.textContent = d;
+        c.appendChild(num);
+
+        if (me[d]) {
+            me[d].forEach(ev => {
+                const chip = document.createElement('a');
+                var isSeminar = ev.type === 'seminar';
+                chip.className = 'event-chip ' + venueClass(ev.venue) + (isSeminar ? ' seminar' : ' ' + genreClass(ev.circle));
+                const icon = isSeminar ? '⭐' : venueIcon(ev.venue);
+                var eventKey = ev.date + ' ' + ev.venue + ' ' + ev.title;
+                chip.innerHTML = '<span class="chip-icon">' + icon + '</span><span class="chip-text">' + ev.title + '<span class="chip-reserve" data-event="' + eventKey.replace(/"/g,'&quot;') + '" data-type="' + (ev.type||'circle') + '"></span></span>';
+                chip.title = ev.title + ' / ' + ev.circle + ' / ' + ev.venue + ' ' + ev.time;
+                chip.onclick = (e) => { e.preventDefault(); openModal(ev); };
+                c.appendChild(chip);
+            });
+        }
+        grid.appendChild(c);
+    }
+
+    const endDow = (startDow + lastDate - 1) % 7;
+    for (let i = endDow + 1; i < 7; i++) {
+        const c = document.createElement('div');
+        c.className = 'day-cell empty';
+        grid.appendChild(c);
+    }
+
+    sec.appendChild(grid);
+    calsEl.appendChild(sec);
+});
+
+function showMonth(m) {
+    document.querySelectorAll('.calendar-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('month-'+m).classList.add('active');
+    document.querySelectorAll('.month-btn')[months.indexOf(m)].classList.add('active');
+}
+
+function openModal(ev) {
+    currentEvent = ev;
+    const icon = venueIcon(ev.venue);
+    document.getElementById('modalTitle').textContent = ev.title;
+    document.getElementById('modalCircle').innerHTML = ev.type === 'seminar' ? '⭐ セミナー・体験会 / ' + ev.circle : ev.circle;
+    document.getElementById('modalMeta').innerHTML =
+        '<div><span class="meta-label">\u{1F4C5} \u958B\u50AC\u65E5</span><span class="meta-value">' + ev.date + '</span></div>' +
+        '<div><span class="meta-label">\u{1F552} \u6642\u9593</span><span class="meta-value">' + ev.time + '\uFF5E</span></div>' +
+        '<div><span class="meta-label">' + icon + ' \u4F1A\u5834</span><span class="meta-value">' + ev.venue + '</span></div>' +
+        '<div><span class="meta-label">\u{1F464} \u5BFE\u8C61</span><span class="meta-value">' + (ev.member||'\u4E00\u822C') + '</span></div>';
+    document.getElementById('modalLinks').innerHTML =
+        '<a href="'+ev.folder+'/report.html" class="btn-report">📄 レポートを見る</a>' +
+        '<a href="'+ev.folder+'/presentation.pdf" class="btn-pres" id="presLink">📊 プレゼン資料</a>';
+    // アップロード済みファイルがあれば差し替え
+    checkUploadedFile(ev);
+    document.getElementById('modal').classList.add('show');
+    // 実績報告済みか自動チェック
+    fetchReportResult();
+    // 修正パネルのリセット
+    document.getElementById('myFixInner').style.display = 'none';
+    document.getElementById('adminReserveList').innerHTML = '';
+    document.getElementById('adminReportList').innerHTML = '';
+    // 管理者は名前入力不要、一般は名前入力必要
+    document.getElementById('myNameInputArea').style.display = isAdmin ? 'none' : 'block';
+}
+function closeModal() {
+    document.getElementById('reportResult').style.display = 'none';
+    document.getElementById('modal').classList.remove('show');
+    document.getElementById('reportForm').style.display = 'none';
+    document.getElementById('reserveForm').style.display = 'none';
+    document.getElementById('formMessage').className = 'form-message';
+    document.getElementById('formMessage').textContent = '';
+    document.getElementById('reserveMessage').className = 'form-message';
+    document.getElementById('reserveMessage').textContent = '';
+    document.getElementById('uploadProgress').className = 'upload-progress';
+    document.getElementById('uploadSuccess').className = 'upload-success';
+    document.getElementById('uploadSuccess').textContent = '';
+    document.getElementById('fileUpload').value = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// ===== 実績報告フォーム =====
+// ** Google Apps ScriptデプロイURL（要設定） **
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwOW_Qi7eqNixtDV-CRn1PRCDi7anA44YhqcTrZJb4nGcnR7yV8HkoTGtyaSJ2LLERUYQ/exec';
+const GAS_RESERVE_URL = 'https://script.google.com/macros/s/AKfycbwZrEBGLSz3D-6OWrpUBXXW05ZxBCYRLBxUY5Evy7OmV84J44xylsiH0Uvxlu12sWjY/exec';
+const GAS_SEMINAR_RESERVE_URL = 'https://script.google.com/macros/s/AKfycbwdPapeI58usT-CWhuTmr_D_nmDEhNdCWp8JaJRNDWE-9tSYbA-0Tzo3uMoqgS0kPv9/exec';
+const GAS_UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbx5BYxCeXz-uTl_erKVjo3XwT8YjOs4Y3aj5ugAmKCzyrLyhtgTHxtX2qO8xJE7jdZe/exec';
+
+let currentEvent = null;
+
+function toggleForm() {
+    const form = document.getElementById('reportForm');
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+        fetchReportResult();
+    } else {
+        form.style.display = 'none';
+    }
+}
+
+function fetchReportResult() {
+    var eventName = currentEvent.date + ' ' + currentEvent.venue + ' ' + currentEvent.title;
+    var url = GAS_URL + '?event=' + encodeURIComponent(eventName);
+    var resultEl = document.getElementById('reportResult');
+    var contentEl = document.getElementById('reportResultContent');
+    resultEl.style.display = 'none';
+
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+          if (data.found) {
+              resultEl.style.display = 'block';
+              contentEl.innerHTML =
+                  '<div>参加: <strong>' + data.groupCount + '組 ' + data.participantCount + '人</strong></div>' +
+                  '<div>VC: ' + data.vcCount + '件 / アセット: ' + data.assetCount + '</div>' +
+                  '<div>PC: ' + data.pcCount + ' / iPhone: ' + data.iphoneCount + ' / その他: ' + data.otherCount + '</div>' +
+                  (data.issues ? '<div>課題: ' + data.issues + '</div>' : '') +
+                  (data.measures ? '<div>対策: ' + data.measures + '</div>' : '') +
+                  '<div>講師: ' + data.instructor + ' / プランナー: ' + data.plannerCount + '名</div>';
+          }
+      })
+      .catch(function() {});
+}
+
+function submitReport() {
+    const btn = document.getElementById('btnSubmit');
+    btn.disabled = true;
+    btn.textContent = '送信中...';
+
+    const data = {
+        eventName: currentEvent.date + ' ' + currentEvent.venue + ' ' + currentEvent.title,
+        groupCount: document.getElementById('fGroupCount').value,
+        participantCount: document.getElementById('fParticipantCount').value,
+        vcCount: document.getElementById('fVcCount').value,
+        assetCount: document.getElementById('fAssetCount').value,
+        pcCount: document.getElementById('fPcCount').value,
+        iphoneCount: document.getElementById('fIphoneCount').value,
+        otherCount: document.getElementById('fOtherCount').value,
+        issues: document.getElementById('fIssues').value,
+        measures: document.getElementById('fMeasures').value,
+        instructor: document.getElementById('fInstructor').value,
+        plannerCount: document.getElementById('fPlannerCount').value,
+        plannerCost: document.getElementById('fPlannerCost').value,
+        otherCost: document.getElementById('fOtherCost').value,
+    };
+
+    fetch(GAS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    })
+    .then(() => {
+        showFormMessage('success', '✔ 送信完了！スプレッドシートに記録されました。');
+        btn.textContent = '送信する';
+        btn.disabled = false;
+        fetchReportResult();
+        ['fGroupCount','fParticipantCount','fVcCount','fAssetCount','fPcCount','fIphoneCount','fOtherCount','fIssues','fMeasures','fInstructor','fPlannerCount','fPlannerCost','fOtherCost'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+    })
+    .catch(err => {
+        showFormMessage('error', '\u274C \u9001\u4FE1\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002\u518D\u5EA6\u304A\u8A66\u3057\u304F\u3060\u3055\u3044\u3002');
+        btn.textContent = '\u9001\u4FE1\u3059\u308B';
+        btn.disabled = false;
+    });
+}
+
+function showFormMessage(type, text) {
+    const msg = document.getElementById('formMessage');
+    msg.className = 'form-message ' + type;
+    msg.textContent = text;
+}
+
+// ===== 参加予約フォーム =====
+var currentTotalGroups = 0;
+var currentTotalPeople = 0;
+
+function toggleReserveForm() {
+    const form = document.getElementById('reserveForm');
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+        fetchCurrentTotal();
+        document.getElementById('rGroupCount').addEventListener('input', updateAfterTotal);
+        document.getElementById('rParticipantCount').addEventListener('input', updateAfterTotal);
+    } else {
+        form.style.display = 'none';
+    }
+}
+
+function getReserveUrl() {
+    return (currentEvent && currentEvent.type === 'seminar') ? GAS_SEMINAR_RESERVE_URL : GAS_RESERVE_URL;
+}
+
+function fetchCurrentTotal() {
+    var eventName = currentEvent.date + ' ' + currentEvent.venue + ' ' + currentEvent.title;
+    var url = getReserveUrl() + '?event=' + encodeURIComponent(eventName);
+    document.getElementById('currentTotal').style.display = 'block';
+    document.getElementById('totalGroupsDisplay').textContent = '...';
+    document.getElementById('totalPeopleDisplay').textContent = '...';
+    document.getElementById('afterTotal').style.display = 'none';
+
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+          currentTotalGroups = data.groups || 0;
+          currentTotalPeople = data.people || 0;
+          document.getElementById('totalGroupsDisplay').textContent = currentTotalGroups;
+          document.getElementById('totalPeopleDisplay').textContent = currentTotalPeople;
+          // プランナー名一覧を表示（名前＋組数）
+          var namesEl = document.getElementById('reserverNames');
+          var namesListEl = document.getElementById('reserverNamesList');
+          if (data.planners && data.planners.length > 0) {
+              namesEl.style.display = 'block';
+              namesListEl.innerHTML = data.planners.map(function(p) {
+                  return '<span style="display:inline-block;background:#d4edda;padding:2px 8px;border-radius:8px;margin:2px 3px;font-size:11px;">👤 ' + p.name + '（' + p.groups + '組）</span>';
+              }).join('');
+          } else if (data.names && data.names.length > 0) {
+              namesEl.style.display = 'block';
+              namesListEl.innerHTML = data.names.map(function(n) {
+                  return '<span style="display:inline-block;background:#d4edda;padding:2px 8px;border-radius:8px;margin:2px 3px;font-size:11px;">👤 ' + n + '</span>';
+              }).join('');
+          } else {
+              namesEl.style.display = 'none';
+          }
+          updateAfterTotal();
+      })
+      .catch(function() {
+          document.getElementById('totalGroupsDisplay').textContent = '?';
+          document.getElementById('totalPeopleDisplay').textContent = '?';
+      });
+}
+
+function updateAfterTotal() {
+    var addGroups = Number(document.getElementById('rGroupCount').value) || 0;
+    var addPeople = Number(document.getElementById('rParticipantCount').value) || 0;
+    if (addGroups > 0 || addPeople > 0) {
+        document.getElementById('afterTotal').style.display = 'block';
+        document.getElementById('afterGroupsDisplay').textContent = currentTotalGroups + addGroups;
+        document.getElementById('afterPeopleDisplay').textContent = currentTotalPeople + addPeople;
+    } else {
+        document.getElementById('afterTotal').style.display = 'none';
+    }
+}
+
+function submitReserve() {
+    const btn = document.getElementById('btnReserve');
+    btn.disabled = true;
+    btn.textContent = '\u9001\u4FE1\u4E2D...';
+
+    const data = {
+        plannerName: document.getElementById('rPlannerName').value,
+        groupCount: document.getElementById('rGroupCount').value,
+        participantCount: document.getElementById('rParticipantCount').value,
+        asset: document.getElementById('rAsset').value,
+        eventName: currentEvent.date + ' ' + currentEvent.venue + ' ' + currentEvent.title,
+    };
+
+    fetch(getReserveUrl(), {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    })
+    .then(() => {
+        const msg = document.getElementById('reserveMessage');
+        msg.className = 'form-message success';
+        msg.textContent = '\u2714 \u9001\u4FE1\u5B8C\u4E86\uFF01\u30B9\u30D7\u30EC\u30C3\u30C9\u30B7\u30FC\u30C8\u306B\u8A18\u9332\u3055\u308C\u307E\u3057\u305F\u3002';
+        btn.textContent = '\u9001\u4FE1\u3059\u308B';
+        btn.disabled = false;
+        ['rPlannerName','rGroupCount','rParticipantCount','rAsset'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+        // 送信後に合計を再取得
+        fetchCurrentTotal();
+        loadAllReserveCounts();
+    })
+    .catch(() => {
+        const msg = document.getElementById('reserveMessage');
+        msg.className = 'form-message error';
+        msg.textContent = '\u274C \u9001\u4FE1\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002';
+        btn.textContent = '\u9001\u4FE1\u3059\u308B';
+        btn.disabled = false;
+    });
+}
+
+// ===== カレンダー上の予約数表示 =====
+function loadAllReserveCounts() {
+    var chips = document.querySelectorAll('.chip-reserve[data-event]');
+    var seen = {};
+    chips.forEach(function(chip) {
+        var name = chip.getAttribute('data-event');
+        var type = chip.getAttribute('data-type') || 'circle';
+        var key = type + '::' + name;
+        if (seen[key]) return;
+        seen[key] = true;
+        var gasUrl = (type === 'seminar') ? GAS_SEMINAR_RESERVE_URL : GAS_RESERVE_URL;
+        if (gasUrl.indexOf('YOUR_') === 0) return;
+        var url = gasUrl + '?event=' + encodeURIComponent(name);
+        fetch(url)
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+              if (data.groups > 0 || data.people > 0) {
+                  var badges = document.querySelectorAll('.chip-reserve[data-event="' + name.replace(/"/g, '&quot;') + '"]');
+                  badges.forEach(function(badge) {
+                      badge.textContent = data.groups + '組 ' + data.people + '人';
+                  });
+              }
+          })
+          .catch(function() {});
+    });
+}
+loadAllReserveCounts();
+
+// ===== アップロード済みファイル確認 =====
+function checkUploadedFile(ev) {
+    if (GAS_UPLOAD_URL.indexOf('YOUR_') === 0) return;
+    var folderName = ev.date.replace(/\//g, '-') + '_' + ev.title + '_' + ev.venue;
+    var url = GAS_UPLOAD_URL + '?folder=' + encodeURIComponent(folderName);
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+          if (data.found && data.url) {
+              var presLink = document.getElementById('presLink');
+              if (presLink) {
+                  presLink.href = data.url;
+                  presLink.target = '_blank';
+                  var dateStr = data.date ? data.date : '';
+                  presLink.innerHTML = '📊 プレゼン資料' + (dateStr ? '<br><span style="font-size:10px;opacity:0.8;">反映日: ' + dateStr + '</span>' : '');
+                  presLink.style.background = 'linear-gradient(135deg, #e8f5e9, #d4edda)';
+                  presLink.style.color = '#2e7d32';
+              }
+          }
+      })
+      .catch(function() {});
+}
+
+// ===== プレゼン資料アップロード =====
+function uploadPresentation(input) {
+    if (!input.files || !input.files[0]) return;
+    if (GAS_UPLOAD_URL === 'YOUR_UPLOAD_GAS_URL_HERE') {
+        var s = document.getElementById('uploadSuccess');
+        s.className = 'upload-success show';
+        s.style.background = '#fce4ec'; s.style.color = '#c62828';
+        s.textContent = '❌ アップロードURLが未設定です。GASの設定を確認してください。';
+        return;
+    }
+    var file = input.files[0];
+    var reader = new FileReader();
+    document.getElementById('uploadProgress').className = 'upload-progress show';
+    document.getElementById('uploadSuccess').className = 'upload-success';
+
+    reader.onload = function(e) {
+        var base64 = e.target.result.split(',')[1];
+        var data = {
+            fileName: file.name,
+            mimeType: file.type,
+            base64: base64,
+            eventDate: currentEvent.date,
+            eventVenue: currentEvent.venue,
+            eventTitle: currentEvent.title,
+            folderName: currentEvent.date.replace(/\//g, '-') + '_' + currentEvent.title + '_' + currentEvent.venue,
+        };
+
+        fetch(GAS_UPLOAD_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+        .then(function() {
+            document.getElementById('uploadProgress').className = 'upload-progress';
+            var s = document.getElementById('uploadSuccess');
+            s.className = 'upload-success show';
+            s.textContent = '✔ 「' + file.name + '」をアップロードしました！';
+            input.value = '';
+            // プレゼンリンクを更新
+            checkUploadedFile(currentEvent);
+        })
+        .catch(function() {
+            document.getElementById('uploadProgress').className = 'upload-progress';
+            var s = document.getElementById('uploadSuccess');
+            s.className = 'upload-success show';
+            s.style.background = '#fce4ec'; s.style.color = '#c62828';
+            s.textContent = '❌ アップロードに失敗しました。再度お試しください。';
+        });
+    };
+    reader.readAsDataURL(file);
+}
+
+// ========== 予約・実績修正機能 ==========
+var currentFixName = '';
+
+function toggleMyFix() {
+    var inner = document.getElementById('myFixInner');
+    if (inner.style.display === 'none') {
+        inner.style.display = 'block';
+        if (isAdmin) {
+            currentFixName = '__ADMIN__';
+            fetchAdminReserveData();
+        }
+    } else {
+        inner.style.display = 'none';
+    }
+}
+
+function loadMyRecords() {
+    var name = document.getElementById('myFixName').value.trim();
+    if (!name) { alert('名前を入力してください'); return; }
+    currentFixName = name;
+    fetchAdminReserveData();
+}
+
+function canEdit(rec) {
+    if (isAdmin) return true;
+    if (!currentFixName || currentFixName === '__ADMIN__') return false;
+    var recName = (rec.plannerName || '').trim();
+    return recName.indexOf(currentFixName) >= 0 || currentFixName.indexOf(recName) >= 0;
+}
+
+function fetchAdminReserveData() {
+    var eventName = currentEvent.date + ' ' + currentEvent.venue + ' ' + currentEvent.title;
+    var gasUrl = (currentEvent.type === 'seminar') ? GAS_SEMINAR_RESERVE_URL : GAS_RESERVE_URL;
+    var panel = document.getElementById('adminReserveList');
+    panel.innerHTML = '<div style="color:#999;padding:8px;">読み込み中...</div>';
+    fetch(gasUrl + '?event=' + encodeURIComponent(eventName) + '&adminList=true')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+          if (!data.records || data.records.length === 0) {
+              panel.innerHTML = '<div style="color:#999;padding:8px;font-size:13px;">予約データなし</div>';
+              return;
+          }
+          panel.innerHTML = data.records.map(function(rec, i) {
+              var editable = canEdit(rec);
+              var btns = editable ?
+                '<div style="display:flex;gap:6px;">' +
+                  '<button onclick="editReserveRow(' + JSON.stringify(JSON.stringify(rec)) + ')" style="padding:4px 10px;background:#ff9800;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;">編集</button>' +
+                  '<button onclick="deleteReserveRow(\'' + rec.sheet + '\',' + rec.row + ')" style="padding:4px 10px;background:#e57373;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;">削除</button>' +
+                '</div>' : '';
+              return '<div style="padding:10px 12px;border-bottom:1px solid #ffe0b2;font-size:13px;">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+                  '<div><strong>' + (rec.plannerName || '不明') + '</strong> — ' + rec.groupCount + '組 ' + rec.participantCount + '人' +
+                    '<span style="color:#bbb;font-size:11px;margin-left:8px;">' + (rec.note || '') + '</span></div>' +
+                  btns +
+                '</div>' +
+                '<div style="font-size:11px;color:#aaa;margin-top:2px;">' + rec.date + ' / ' + rec.sheet + '</div>' +
+              '</div>';
+          }).join('');
+      })
+      .catch(function() {
+          panel.innerHTML = '<div style="color:#c62828;padding:8px;font-size:13px;">読み込み失敗</div>';
+      });
+
+    // 実績データも取得
+    var reportPanel = document.getElementById('adminReportList');
+    reportPanel.innerHTML = '<div style="color:#999;padding:8px;">読み込み中...</div>';
+    fetch(GAS_URL + '?event=' + encodeURIComponent(eventName) + '&adminList=true')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+          if (!data.records || data.records.length === 0) {
+              reportPanel.innerHTML = '<div style="color:#999;padding:8px;font-size:13px;">実績データなし</div>';
+              return;
+          }
+          reportPanel.innerHTML = data.records.map(function(rec) {
+              var editable = isAdmin;
+              var btns = editable ?
+                '<div style="display:flex;gap:6px;">' +
+                  '<button onclick="editReportRow(' + JSON.stringify(JSON.stringify(rec)) + ')" style="padding:4px 10px;background:#8b6aae;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;">編集</button>' +
+                  '<button onclick="deleteReportRow(\'' + rec.sheet + '\',' + rec.row + ')" style="padding:4px 10px;background:#e57373;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;">削除</button>' +
+                '</div>' : '';
+              return '<div style="padding:10px 12px;border-bottom:1px solid #e0d8e8;font-size:13px;">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+                  '<div>参加: <strong>' + rec.groupCount + '組 ' + rec.participantCount + '人</strong> VC:' + rec.vcCount + ' アセット:' + rec.assetCount +
+                    '<span style="color:#bbb;font-size:11px;margin-left:8px;">' + (rec.note || '') + '</span></div>' +
+                  btns +
+                '</div>' +
+                '<div style="font-size:11px;color:#aaa;margin-top:2px;">' + rec.date + ' / 講師:' + (rec.instructor||'-') + ' / ' + rec.sheet + '</div>' +
+              '</div>';
+          }).join('');
+      })
+      .catch(function() {
+          reportPanel.innerHTML = '<div style="color:#c62828;padding:8px;font-size:13px;">読み込み失敗</div>';
+      });
+}
+
+function editReserveRow(recJson) {
+    var rec = JSON.parse(recJson);
+    var newName = prompt('プランナー名', rec.plannerName || '');
+    if (newName === null) return;
+    var newGroups = prompt('組数', rec.groupCount);
+    if (newGroups === null) return;
+    var newPeople = prompt('人数', rec.participantCount);
+    if (newPeople === null) return;
+    var gasUrl = (currentEvent.type === 'seminar') ? GAS_SEMINAR_RESERVE_URL : GAS_RESERVE_URL;
+    fetch(gasUrl, {
+        method: 'POST', mode: 'no-cors',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({action:'adminEditRow', sheetName:rec.sheet, row:rec.row, plannerName:newName, groupCount:newGroups, participantCount:newPeople})
+    }).then(function() {
+        alert('更新しました');
+        fetchAdminReserveData();
+        loadAllReserveCounts();
+    });
+}
+
+function deleteReserveRow(sheet, row) {
+    if (!confirm('この予約を削除しますか？')) return;
+    var gasUrl = (currentEvent.type === 'seminar') ? GAS_SEMINAR_RESERVE_URL : GAS_RESERVE_URL;
+    fetch(gasUrl, {
+        method: 'POST', mode: 'no-cors',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({action:'adminDeleteRow', sheetName:sheet, row:row})
+    }).then(function() {
+        alert('削除しました');
+        fetchAdminReserveData();
+        loadAllReserveCounts();
+    });
+}
+
+function editReportRow(recJson) {
+    var rec = JSON.parse(recJson);
+    var fields = [
+        {key:'groupCount', label:'参加組数', val:rec.groupCount},
+        {key:'participantCount', label:'参加人数', val:rec.participantCount},
+        {key:'vcCount', label:'VC数', val:rec.vcCount},
+        {key:'assetCount', label:'アセット数', val:rec.assetCount},
+        {key:'pcCount', label:'PC数', val:rec.pcCount},
+        {key:'iphoneCount', label:'iPhone数', val:rec.iphoneCount},
+        {key:'otherCount', label:'その他数', val:rec.otherCount},
+        {key:'instructor', label:'講師', val:rec.instructor},
+        {key:'plannerCount', label:'プランナー数', val:rec.plannerCount},
+        {key:'issues', label:'課題', val:rec.issues},
+        {key:'measures', label:'対策', val:rec.measures}
+    ];
+    var payload = {action:'adminEditRow', sheetName:rec.sheet, row:rec.row};
+    for (var i = 0; i < fields.length; i++) {
+        var v = prompt(fields[i].label, fields[i].val);
+        if (v === null) return;
+        payload[fields[i].key] = v;
+    }
+    fetch(GAS_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+    }).then(function() {
+        alert('更新しました');
+        fetchAdminReserveData();
+        fetchReportResult();
+    });
+}
+
+function deleteReportRow(sheet, row) {
+    if (!confirm('この実績データを削除しますか？')) return;
+    fetch(GAS_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({action:'adminDeleteRow', sheetName:sheet, row:row})
+    }).then(function() {
+        alert('削除しました');
+        fetchAdminReserveData();
+        fetchReportResult();
+    });
+}
+
+// ========== 管理者編集機能 ==========
+const ADMIN_SALT = 'slmc-boso-admin-v1';
+const ADMIN_PASS_HASH = '1d9a4c480c410412da365a38622fa309df6029525a2edcf6ffd6f1b4bf1ed0c3';
+let isAdmin = false;
+const dowJa = ['日','月','火','水','木','金','土'];
+
+async function sha256Hex(text) {
+    const data = new TextEncoder().encode(text);
+    if (!window.crypto || !window.crypto.subtle) return sha256HexFallback(data);
+    const digest = await window.crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function sha256HexFallback(data) {
+    const k = [
+        0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+        0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+        0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+        0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+        0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+        0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+        0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+        0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+    ];
+    const h = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    const padded = new Uint8Array(((data.length + 9 + 63) >> 6) << 6);
+    padded.set(data);
+    padded[data.length] = 0x80;
+    const view = new DataView(padded.buffer);
+    const bitLen = data.length * 8;
+    view.setUint32(padded.length - 4, bitLen, false);
+    const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+    const w = new Array(64);
+
+    for (let i = 0; i < padded.length; i += 64) {
+        for (let j = 0; j < 16; j++) w[j] = view.getUint32(i + j * 4, false);
+        for (let j = 16; j < 64; j++) {
+            const s0 = rotr(w[j - 15], 7) ^ rotr(w[j - 15], 18) ^ (w[j - 15] >>> 3);
+            const s1 = rotr(w[j - 2], 17) ^ rotr(w[j - 2], 19) ^ (w[j - 2] >>> 10);
+            w[j] = (w[j - 16] + s0 + w[j - 7] + s1) >>> 0;
+        }
+        let [a,b,c,d,e,f,g,hh] = h;
+        for (let j = 0; j < 64; j++) {
+            const s1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+            const ch = (e & f) ^ (~e & g);
+            const t1 = (hh + s1 + ch + k[j] + w[j]) >>> 0;
+            const s0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+            const maj = (a & b) ^ (a & c) ^ (b & c);
+            const t2 = (s0 + maj) >>> 0;
+            hh = g; g = f; f = e; e = (d + t1) >>> 0;
+            d = c; c = b; b = a; a = (t1 + t2) >>> 0;
+        }
+        h[0] = (h[0] + a) >>> 0; h[1] = (h[1] + b) >>> 0; h[2] = (h[2] + c) >>> 0; h[3] = (h[3] + d) >>> 0;
+        h[4] = (h[4] + e) >>> 0; h[5] = (h[5] + f) >>> 0; h[6] = (h[6] + g) >>> 0; h[7] = (h[7] + hh) >>> 0;
+    }
+    return h.map(x => x.toString(16).padStart(8, '0')).join('');
+}
+
+async function adminLogin() {
+    const pw = prompt('管理者パスワードを入力してください');
+    if (pw === null) return;
+    const hash = await sha256Hex(ADMIN_SALT + pw);
+    if (hash === ADMIN_PASS_HASH) {
+        isAdmin = true;
+        document.getElementById('adminBtn').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        renderAdminList();
+    } else {
+        alert('パスワードが違います');
+    }
+}
+
+function adminLogout() {
+    isAdmin = false;
+    document.getElementById('adminBtn').style.display = '';
+    document.getElementById('adminPanel').style.display = 'none';
+}
+
+function renderAdminList() {
+    const list = document.getElementById('adminEventList');
+    const sorted = [...events].sort((a,b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+    list.innerHTML = sorted.map(ev => {
+        const origIdx = events.indexOf(ev);
+        const d = new Date(ev.date + 'T00:00:00');
+        const dow = dowJa[d.getDay()];
+        return '<div class="admin-event-row" onclick="openEditModal(' + origIdx + ')">' +
+            '<div class="admin-ev-date">' + ev.date + ' (' + dow + ')</div>' +
+            '<div class="admin-ev-info">' +
+                '<div class="admin-ev-title">' + ev.title + '</div>' +
+                '<div class="admin-ev-meta">' + ev.time + ' ｜ ' + ev.venue + ' ｜ ' + ev.circle + '</div>' +
+            '</div>' +
+            '<div class="admin-ev-arrow">›</div>' +
+        '</div>';
+    }).join('');
+}
+
+function openEditModal(idx) {
+    const ev = events[idx];
+    document.getElementById('editIdx').value = idx;
+    document.getElementById('editDate').value = ev.date;
+    document.getElementById('editTime').value = ev.time;
+    document.getElementById('editVenue').value = ev.venue;
+    document.getElementById('editCircle').value = ev.circle;
+    document.getElementById('editTitle').value = ev.title;
+    document.getElementById('editMember').value = ev.member || '';
+    document.getElementById('editModal').classList.add('show');
+}
+
+function closeEditModal() {
+    document.getElementById('editModal').classList.remove('show');
+}
+
+function rebuildAll() {
+    // カレンダーを再描画
+    const calsEl = document.getElementById('calendars');
+    calsEl.innerHTML = '';
+    months.forEach((month, i) => {
+        const sec = document.createElement('div');
+        sec.className = 'calendar-section' + (i===0?' active':'');
+        sec.id = 'month-' + month;
+        const t = document.createElement('div');
+        t.className = 'calendar-title';
+        t.innerHTML = '<span class="cal-month-en">' + monthNames[month] + '</span><span class="cal-month-ja">2026年 ' + monthNamesJa[month] + '</span>';
+        sec.appendChild(t);
+        const grid = document.createElement('div');
+        grid.className = 'calendar-grid';
+        dayLabels.forEach((d, di) => {
+            const h = document.createElement('div');
+            h.className = 'day-header' + (di===6?' sun':'') + (di===5?' sat':'');
+            h.textContent = d;
+            grid.appendChild(h);
+        });
+        const firstDay = new Date(2026, month-1, 1);
+        const lastDate = new Date(2026, month, 0).getDate();
+        const startDow = (firstDay.getDay() + 6) % 7;
+        const me = {};
+        events.forEach(ev => {
+            const dd = new Date(ev.date);
+            if (dd.getMonth()+1 === month) {
+                const day = dd.getDate();
+                if (!me[day]) me[day] = [];
+                me[day].push(ev);
+            }
+        });
+        for (let ii = 0; ii < startDow; ii++) {
+            const c = document.createElement('div'); c.className = 'day-cell empty'; grid.appendChild(c);
+        }
+        for (let d = 1; d <= lastDate; d++) {
+            const dow2 = (startDow + d - 1) % 7;
+            const c = document.createElement('div');
+            c.className = 'day-cell' + (dow2===6?' sun-bg':'') + (dow2===5?' sat-bg':'');
+            const num = document.createElement('div'); num.className = 'day-number'; num.textContent = d; c.appendChild(num);
+            if (me[d]) {
+                me[d].forEach(ev => {
+                    const chip = document.createElement('a');
+                    var isSeminar = ev.type === 'seminar';
+                    chip.className = 'event-chip ' + venueClass(ev.venue) + (isSeminar ? ' seminar' : ' ' + genreClass(ev.circle));
+                    const icon = isSeminar ? '⭐' : venueIcon(ev.venue);
+                    var eventKey = ev.date + ' ' + ev.venue + ' ' + ev.title;
+                    chip.innerHTML = '<span class="chip-icon">' + icon + '</span><span class="chip-text">' + ev.title + '<span class="chip-reserve" data-event="' + eventKey.replace(/"/g,'&quot;') + '" data-type="' + (ev.type||'circle') + '"></span></span>';
+                    chip.title = ev.title + ' / ' + ev.circle + ' / ' + ev.venue + ' ' + ev.time;
+                    chip.onclick = (e) => { e.preventDefault(); openModal(ev); };
+                    c.appendChild(chip);
+                });
+            }
+            grid.appendChild(c);
+        }
+        const endDow = (startDow + lastDate - 1) % 7;
+        for (let ii = endDow + 1; ii < 7; ii++) {
+            const c = document.createElement('div'); c.className = 'day-cell empty'; grid.appendChild(c);
+        }
+        sec.appendChild(grid);
+        calsEl.appendChild(sec);
+    });
+    // 予約数を再読み込み
+    if (typeof loadAllReserveCounts === 'function') loadAllReserveCounts();
+}
+
+function saveEdit() {
+    const idx = parseInt(document.getElementById('editIdx').value);
+    events[idx].date = document.getElementById('editDate').value;
+    events[idx].time = document.getElementById('editTime').value;
+    events[idx].venue = document.getElementById('editVenue').value;
+    events[idx].circle = document.getElementById('editCircle').value;
+    events[idx].title = document.getElementById('editTitle').value;
+    events[idx].member = document.getElementById('editMember').value;
+    const shortTitle = events[idx].title.substring(0, 40).replace(/[\/\\:*?"<>|]/g, '');
+    events[idx].folder = events[idx].date + '_' + shortTitle + '_' + events[idx].venue;
+    persistEvents();
+    syncCustomerWindow();
+    closeEditModal();
+    rebuildAll();
+    renderAdminList();
+}
+
+function deleteEvent() {
+    const idx = parseInt(document.getElementById('editIdx').value);
+    if (confirm('「' + events[idx].title + '」を削除しますか？')) {
+        events.splice(idx, 1);
+        persistEvents();
+        syncCustomerWindow();
+        closeEditModal();
+        rebuildAll();
+        renderAdminList();
+    }
+}
+
+function addNewEvent() {
+    const newEv = {
+        date: new Date().toISOString().split('T')[0],
+        time: '13:00', venue: '市原', circle: '', title: '新しいイベント', member: '', folder: ''
+    };
+    events.push(newEv);
+    openEditModal(events.length - 1);
+}
+
+function exportEvents() {
+    const json = JSON.stringify(events, null, 2);
+    const blob = new Blob([json], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'events.json'; a.click();
+    URL.revokeObjectURL(url);
+    eventsDirty = false;
+}
+
+window.addEventListener('beforeunload', (e) => {
+    if (!eventsDirty) return;
+    e.preventDefault();
+    e.returnValue = '';
+});
+</script>
+
+<!-- 管理者ボタン -->
+<div style="text-align:center;padding:30px 16px 10px;">
+    <button id="adminBtn" onclick="adminLogin()" style="padding:10px 24px;background:linear-gradient(135deg,#c9a7d8,#a7bce8);color:#fff;border:none;border-radius:20px;font-size:13px;cursor:pointer;font-family:inherit;letter-spacing:1px;box-shadow:0 2px 8px rgba(180,160,200,0.3);">管理者ログイン</button>
+</div>
+
+<!-- 管理者パネル -->
+<div id="adminPanel" style="display:none;max-width:800px;margin:0 auto;padding:16px 25px;">
+    <div style="background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-radius:20px;box-shadow:0 4px 20px rgba(180,160,200,0.15);overflow:hidden;border:1px solid rgba(220,200,230,0.3);">
+        <div style="background:linear-gradient(135deg,#c9a7d8,#a7bce8);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <span style="font-weight:700;font-size:17px;letter-spacing:1px;">イベント管理</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button onclick="addNewEvent()" style="background:#fff;color:#8b6aae;border:none;border-radius:14px;padding:7px 16px;font-size:13px;cursor:pointer;font-weight:700;font-family:inherit;">＋ 追加</button>
+                <button onclick="openCustomerView()" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:14px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:inherit;">カスタマー表示</button>
+                <button onclick="exportEvents()" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:14px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:inherit;">events.jsonを書き出し</button>
+                <button onclick="adminLogout()" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:14px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:inherit;">ログアウト</button>
+            </div>
+        </div>
+        <div style="padding:10px 18px;background:#f7fbf9;border-bottom:1px solid rgba(33,77,64,0.08);font-size:12px;color:#58766d;">
+            編集後は「events.jsonを書き出し」で保存し、公開サーバーの events.json を上書きしてください。
+        </div>
+        <div id="adminEventList" style="max-height:500px;overflow-y:auto;"></div>
+    </div>
+</div>
+
+<!-- 編集モーダル -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-content" style="max-width:480px;">
+        <div class="modal-header" style="background:linear-gradient(135deg,#c9a7d8,#a7bce8);">
+            <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            <div class="modal-title" style="font-size:18px;">イベント編集</div>
+        </div>
+        <div style="padding:22px;">
+            <input type="hidden" id="editIdx">
+            <div style="margin-bottom:14px;">
+                <label style="font-size:12px;color:#a090b0;display:block;margin-bottom:4px;">日付</label>
+                <input type="date" id="editDate" style="width:100%;padding:10px 12px;border:1.5px solid #e0d8e8;border-radius:12px;font-size:15px;font-family:inherit;background:#faf8fc;">
+            </div>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:12px;color:#a090b0;display:block;margin-bottom:4px;">時間</label>
+                <input type="time" id="editTime" style="width:100%;padding:10px 12px;border:1.5px solid #e0d8e8;border-radius:12px;font-size:15px;font-family:inherit;background:#faf8fc;">
+            </div>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:12px;color:#a090b0;display:block;margin-bottom:4px;">会場</label>
+                <select id="editVenue" style="width:100%;padding:10px 12px;border:1.5px solid #e0d8e8;border-radius:12px;font-size:15px;font-family:inherit;background:#faf8fc;">
+                    <option value="市原">市原</option>
+                </select>
+            </div>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:12px;color:#a090b0;display:block;margin-bottom:4px;">サークル名</label>
+                <input type="text" id="editCircle" style="width:100%;padding:10px 12px;border:1.5px solid #e0d8e8;border-radius:12px;font-size:15px;font-family:inherit;background:#faf8fc;">
+            </div>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:12px;color:#a090b0;display:block;margin-bottom:4px;">タイトル</label>
+                <input type="text" id="editTitle" style="width:100%;padding:10px 12px;border:1.5px solid #e0d8e8;border-radius:12px;font-size:15px;font-family:inherit;background:#faf8fc;">
+            </div>
+            <div style="margin-bottom:20px;">
+                <label style="font-size:12px;color:#a090b0;display:block;margin-bottom:4px;">対象</label>
+                <input type="text" id="editMember" placeholder="一般聴講生、DX、専門聴講生など" style="width:100%;padding:10px 12px;border:1.5px solid #e0d8e8;border-radius:12px;font-size:15px;font-family:inherit;background:#faf8fc;">
+            </div>
+            <div style="display:flex;gap:10px;">
+                <button onclick="saveEdit()" style="flex:1;padding:13px;background:linear-gradient(135deg,#c9a7d8,#a7bce8);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:1px;">保存</button>
+                <button onclick="deleteEvent()" style="padding:13px 20px;background:#e8a7a7;color:#fff;border:none;border-radius:14px;font-size:15px;cursor:pointer;font-family:inherit;">削除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.admin-event-row{display:flex;align-items:center;padding:14px 22px;border-bottom:1px solid #f0ecf4;cursor:pointer;transition:background 0.15s;}
+.admin-event-row:hover{background:#faf6fd;}
+.admin-ev-date{font-size:13px;color:#8b6aae;font-weight:700;min-width:120px;font-family:"Quicksand","Zen Maru Gothic",sans-serif;}
+.admin-ev-info{flex:1;min-width:0;}
+.admin-ev-title{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#5a5070;}
+.admin-ev-meta{font-size:12px;color:#b0a0c0;margin-top:2px;}
+.admin-ev-arrow{font-size:22px;color:#d0c0e0;margin-left:8px;}
+</style>
 </body>
 </html>
