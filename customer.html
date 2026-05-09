@@ -1056,6 +1056,12 @@ function refreshFromEvents() {
 const campusInfo = {
     '市原': { name:'市原キャンパス', shop:'ピーシーデポスマートライフ市原インターBASE', address:'〒290-0050 千葉県市原市更級3丁目1番地1', phone:'0436-20-6511' }
 };
+function formatTimeJa(value) {
+    const text = String(value || '');
+    const match = text.match(/(\d{1,2}):(\d{2})/);
+    if (!match) return text.replace(/～$/, '');
+    return Number(match[1]) + '時' + match[2] + '分';
+}
 function openModal(ev) {
     const [tag, tagCls] = genreTag(ev.circle);
     document.getElementById('modalGenre').innerHTML =
@@ -1063,7 +1069,7 @@ function openModal(ev) {
     document.getElementById('modalTitle').textContent = ev.title;
     document.getElementById('modalInfo').innerHTML =
         `<div><div class="info-label">開催日</div><div class="info-value">${ev.date.replace(/-/g,'.')}</div></div>` +
-        `<div><div class="info-label">時間</div><div class="info-value">${ev.time}～</div></div>` +
+        `<div><div class="info-label">時間</div><div class="info-value">${formatTimeJa(ev.time)}</div></div>` +
         `<div><div class="info-label">会場</div><div class="info-value"><span class="modal-venue-badge"><span class="modal-venue-dot" style="background:${venueColor(ev.venue)};"></span>${ev.venue}</span></div></div>` +
         `<div><div class="info-label">サークル</div><div class="info-value" style="font-size:12px;">${ev.circle}</div></div>`;
     const ci = campusInfo[ev.venue] || campusInfo['市原'];

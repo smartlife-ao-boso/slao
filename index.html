@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!--
+  SMART LIFE AO 房総校 管理画面カレンダー
+  開発メモ:
+  - スケジュール、予約、実績、資料アップロードは房総専用GASに保存します。
+  - 北総用GAS URL、localStorageでのスケジュール保存、events.jsonの本番利用は復活させないでください。
+  - GASを再デプロイした場合は、index.html と customer.html の BOSO_GAS_URL を同じURLに更新してください。
+-->
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -804,6 +811,7 @@ body::after {
 </div>
 <script>
 
+// 房総専用バックエンドURL。この1本のGASでイベント、予約、実績、資料アップロードを扱います。
 const BOSO_GAS_URL = 'https://script.google.com/macros/s/AKfycby8cECPGXC7855kG4Fvqk65RnMz9yPeE8jj3bCxuGLplMIWW0AhdIM2ZCjNPzTXeqFL/exec';
 const events = [];
 let customerWindow = null;
@@ -831,6 +839,7 @@ async function loadEventsFromJson() {
 }
 
 async function fetchEventsJson() {
+    // 通常URLを先に試し、静的配信やCDNキャッシュ対策としてクエリ付きURLでも再試行します。
     const urls = [BOSO_GAS_URL + '?action=events', BOSO_GAS_URL + '?action=events&v=' + Date.now()];
     let lastError = null;
     for (const url of urls) {
@@ -842,7 +851,7 @@ async function fetchEventsJson() {
             lastError = e;
         }
     }
-    throw lastError || new Error('Boso GAS events fetch failed');
+    throw lastError || new Error('房総GASのイベント取得に失敗しました');
 }
 
 function showEventsLoadError(error) {
@@ -854,6 +863,7 @@ function showEventsLoadError(error) {
 function persistEvents() {
     eventsDirty = true;
     if (BOSO_GAS_URL.indexOf('YOUR_') === 0) return;
+    // ブラウザのみではサーバー上のファイルを書き換えられないため、イベント編集はGASへ保存します。
     fetch(BOSO_GAS_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -1018,6 +1028,13 @@ function showMonth(m) {
     document.querySelectorAll('.month-btn')[months.indexOf(m)].classList.add('active');
 }
 
+function formatTimeJa(value) {
+    const text = String(value || '');
+    const match = text.match(/(\d{1,2}):(\d{2})/);
+    if (!match) return text.replace(/～$/, '');
+    return Number(match[1]) + '時' + match[2] + '分';
+}
+
 function openModal(ev) {
     currentEvent = ev;
     const icon = venueIcon(ev.venue);
@@ -1025,7 +1042,7 @@ function openModal(ev) {
     document.getElementById('modalCircle').innerHTML = ev.type === 'seminar' ? '⭐ セミナー・体験会 / ' + ev.circle : ev.circle;
     document.getElementById('modalMeta').innerHTML =
         '<div><span class="meta-label">\u{1F4C5} \u958B\u50AC\u65E5</span><span class="meta-value">' + ev.date + '</span></div>' +
-        '<div><span class="meta-label">\u{1F552} \u6642\u9593</span><span class="meta-value">' + ev.time + '\uFF5E</span></div>' +
+        '<div><span class="meta-label">\u{1F552} \u6642\u9593</span><span class="meta-value">' + formatTimeJa(ev.time) + '</span></div>' +
         '<div><span class="meta-label">' + icon + ' \u4F1A\u5834</span><span class="meta-value">' + ev.venue + '</span></div>' +
         '<div><span class="meta-label">\u{1F464} \u5BFE\u8C61</span><span class="meta-value">' + (ev.member||'\u4E00\u822C') + '</span></div>';
     document.getElementById('modalLinks').innerHTML =
