@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!--
+  SMART LIFE AO 房総校 カスタマー向けカレンダー
+  開発メモ:
+  - カスタマー画面は閲覧専用で、スケジュールは房総専用GASから読み込みます。
+  - GASを再デプロイした場合は、index.html と customer.html の BOSO_GAS_URL を同じURLに更新してください。
+  - events.json は本番用データソースではありません。
+-->
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -346,17 +353,18 @@ body{
     float:right;
 }
 .ev-chip{
-    display:block;
-    padding:5px 7px;
-    margin-bottom:4px;
-    border-radius:10px;
-    font-size:10.5px;
-    line-height:1.36;
+    display:flex;
+    align-items:flex-start;
+    gap:5px;
+    padding:7px 8px;
+    margin-bottom:5px;
+    border-radius:12px;
+    font-size:11px;
+    line-height:1.42;
     cursor:pointer;
-    transition:all 0.15s;
+    transition:transform 0.16s ease, box-shadow 0.16s ease;
     text-decoration:none;
     color:inherit;
-    word-break:break-word;
     border:1px solid transparent;
 }
 .ev-chip:hover{
@@ -368,6 +376,11 @@ body{
 .ev-chip.v-tomisato{background:#fdf4ea;border-color:rgba(233,168,103,0.26);}
 .ev-chip.v-narita{background:#ecf8fb;border-color:rgba(74,165,186,0.24);}
 .ev-chip.v-kamagaya{background:#edf8f1;border-color:rgba(93,163,122,0.22);}
+.ev-chip.genre-ai{color:#0b6d8a;}
+.ev-chip.genre-security{color:#9c3f37;}
+.ev-chip.genre-business{color:#2d7d4c;}
+.ev-chip.genre-photo{color:#a56a1f;}
+.ev-chip.genre-esports{color:#6c46b3;}
 .ev-chip.seminar{
     border-radius:999px;
     font-weight:700;
@@ -377,18 +390,19 @@ body{
 .ev-chip.seminar.v-tomisato{background:linear-gradient(135deg,#fff6ec,#fbe8cf);color:#8c5820;}
 .ev-chip.seminar.v-narita{background:linear-gradient(135deg,#eef9fc,#dff3f8);color:#2d6f81;}
 .ev-chip.seminar.v-kamagaya{background:linear-gradient(135deg,#f1fbf3,#dff1e5);color:#2d7246;}
-.ev-time{
+.chip-icon{flex-shrink:0;font-size:11px;margin-top:1px;}
+.chip-text{word-break:break-word;}
+.chip-reserve{
+    display:inline-block;
     font-family:"Space Grotesk",sans-serif;
     font-size:9px;
     font-weight:700;
-    opacity:0.58;
-    margin-right:2px;
-}
-.ev-venue-label{
-    font-size:9px;
-    font-weight:700;
-    opacity:0.74;
-    margin-right:2px;
+    color:#fff;
+    background:var(--accent);
+    padding:1px 6px;
+    border-radius:999px;
+    margin-left:4px;
+    white-space:nowrap;
 }
 .modal-overlay{
     display:none;
@@ -675,8 +689,6 @@ body{
     .month-ja{font-size:20px;}
     .day-cell{min-height:78px;padding:4px;}
     .ev-chip{font-size:9px;padding:3px 4px;line-height:1.3;}
-    .ev-time{font-size:8px;}
-    .ev-venue-label{font-size:8px;}
     .day-number{font-size:11px;}
     .modal{max-width:100%;border-radius:18px;margin:10px;}
     .modal-header{padding:20px 20px 12px;}
@@ -698,7 +710,6 @@ body{
     .venue-legend-item{font-size:10px;}
     .day-cell{min-height:62px;padding:2px;}
     .ev-chip{font-size:8px;padding:2px 3px;}
-    .ev-venue-label{display:none;}
     .day-number{font-size:10px;}
     .calendar-grid{border-radius:14px;}
     .day-header{padding:7px 2px;font-size:10px;letter-spacing:0.08em;}
@@ -795,6 +806,7 @@ body{
 </div>
 
 <script>
+// 房総専用バックエンドURL。カスタマー画面はこのGASからEVENTSデータだけを読み込みます。
 const BOSO_GAS_URL = 'https://script.google.com/macros/s/AKfycby8cECPGXC7855kG4Fvqk65RnMz9yPeE8jj3bCxuGLplMIWW0AhdIM2ZCjNPzTXeqFL/exec';
 const events = [];
 
@@ -820,6 +832,7 @@ async function loadEventsFromJson() {
 }
 
 async function fetchEventsJson() {
+    // 通常URLを先に試し、静的配信やCDNキャッシュ対策としてクエリ付きURLでも再試行します。
     const urls = [BOSO_GAS_URL + '?action=events', BOSO_GAS_URL + '?action=events&v=' + Date.now()];
     let lastError = null;
     for (const url of urls) {
@@ -831,7 +844,7 @@ async function fetchEventsJson() {
             lastError = e;
         }
     }
-    throw lastError || new Error('Boso GAS events fetch failed');
+    throw lastError || new Error('房総GASのイベント取得に失敗しました');
 }
 
 function showEventsLoadError(error) {
@@ -844,8 +857,8 @@ function showEventsLoadError(error) {
 
 const months = ['2026-04','2026-05','2026-06','2026-07','2026-08','2026-09'];
 const monthNames = {
-    '2026-04':['APRIL','4月'],'2026-05':['MAY','5月'],'2026-06':['JUNE','6月'],
-    '2026-07':['JULY','7月'],'2026-08':['AUGUST','8月'],'2026-09':['SEPTEMBER','9月']
+    '2026-04':['April','4月'],'2026-05':['May','5月'],'2026-06':['June','6月'],
+    '2026-07':['July','7月'],'2026-08':['August','8月'],'2026-09':['September','9月']
 };
 const dowJa = ['日','月','火','水','木','金','土'];
 let currentFilter = 'all';
@@ -854,6 +867,19 @@ let currentView = 'calendar';
 function venueClass(v) {
     if(v.includes('市原')) return 'v-narita';
     return '';
+}
+function venueIcon(v) {
+    if(v.includes('市原')) return '★';
+    return '★';
+}
+function genreClass(c) {
+    if(c.includes('安全')) return 'genre-security';
+    if(c.includes('商店') || c.includes('事業主')) return 'genre-business';
+    if(c.includes('写真') || c.includes('メディア')) return 'genre-photo';
+    if(c.includes('Sports') || c.includes('スポーツ')) return 'genre-esports';
+    if(c.includes('デジタル活用')) return 'genre-ai';
+    if(c.includes('AI')) return 'genre-ai';
+    return 'genre-ai';
 }
 function venueColor(v) {
     if(v.includes('市原')) return '#4aa5ba';
@@ -908,7 +934,7 @@ function buildCalendars() {
         });
 
         let html = `<div class="calendar-section${idx===0?' active':''}" id="month-${m}">`;
-        html += `<div class="calendar-month-header"><div class="calendar-month-title"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">${monthNames[m][1]}</div></div><div class="venue-legend"><div class="venue-legend-item"><div class="venue-dot" style="background:#4aa5ba;"></div>市原キャンパス</div><div class="venue-legend-item"><span style="display:inline-block;width:24px;height:12px;border-radius:8px;border:1.5px solid #d4a017;background:linear-gradient(135deg,#fff8eb,#fef0d0);"></span>セミナー</div></div></div>`;
+        html += `<div class="calendar-month-header"><div class="calendar-month-title"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">2026年 ${monthNames[m][1]}</div></div><div class="venue-legend"><div class="venue-legend-item"><div class="venue-dot" style="background:#4aa5ba;"></div>市原キャンパス</div><div class="venue-legend-item"><span style="display:inline-block;width:24px;height:12px;border-radius:8px;border:1.5px solid #d4a017;background:linear-gradient(135deg,#fff8eb,#fef0d0);"></span>セミナー</div></div></div>`;
         html += '<div class="calendar-grid">';
         // Headers (Mon-Sun)
         const headers = ['月','火','水','木','金','土','日'];
@@ -932,11 +958,11 @@ function buildCalendars() {
                 evByDate[d].forEach(ev=>{
                     const vc = venueClass(ev.venue);
                     const isSem = ev.type==='seminar';
-                    const chipCls = isSem ? `ev-chip seminar ${vc}` : `ev-chip ${vc}`;
+                    const chipCls = isSem ? `ev-chip seminar ${vc}` : `ev-chip ${vc} ${genreClass(ev.circle)}`;
+                    const icon = isSem ? '★' : venueIcon(ev.venue);
+                    const eventKey = ev.date + ' ' + ev.venue + ' ' + ev.title;
                     html += `<div class="${chipCls}" onclick='openModal(${JSON.stringify(ev).replace(/'/g,"\\'")})'>`;
-                    html += `<span class="ev-time">${ev.time}</span>`;
-                    html += `<span class="ev-venue-label">${ev.venue}</span> `;
-                    html += ev.title;
+                    html += `<span class="chip-icon">${icon}</span><span class="chip-text">${ev.title}<span class="chip-reserve" data-event="${eventKey.replace(/"/g,'&quot;')}" data-type="${ev.type||'circle'}"></span></span>`;
                     html += '</div>';
                 });
             }
@@ -958,7 +984,7 @@ function buildList() {
         const monthEvents = fe.filter(e=>e.date.startsWith(m));
         if(monthEvents.length === 0) return '';
         let html = `<div class="calendar-section${idx===0?' active':''}" id="list-${m}">`;
-        html += `<div class="calendar-month-title" style="margin-bottom:12px;"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">${monthNames[m][1]}</div></div>`;
+        html += `<div class="calendar-month-title" style="margin-bottom:12px;"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">2026年 ${monthNames[m][1]}</div></div>`;
         html += '<div class="event-list">';
         monthEvents.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
         monthEvents.forEach(ev=>{
