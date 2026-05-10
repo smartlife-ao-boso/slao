@@ -862,7 +862,18 @@ const monthNames = {
 };
 const dowJa = ['日','月','火','水','木','金','土'];
 let currentFilter = 'all';
-let currentView = 'calendar';
+let currentView = shouldStartWithListView() ? 'list' : 'calendar';
+let currentMonth = getInitialMonth();
+
+function getInitialMonth() {
+    const now = new Date();
+    const key = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+    return months.includes(key) ? key : months[0];
+}
+
+function shouldStartWithListView() {
+    return window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+}
 
 function venueClass(v) {
     if(v.includes('市原')) return 'v-narita';
@@ -904,7 +915,7 @@ function filteredEvents() {
 function buildMonthNav() {
     const nav = document.getElementById('monthNav');
     nav.innerHTML = months.map((m,i)=>
-        `<button class="month-btn${i===0?' active':''}" onclick="showMonth('${m}')">${monthNames[m][0]}<span style="font-size:10px;opacity:0.6;margin-left:4px;">${monthNames[m][1]}</span></button>`
+        `<button class="month-btn${m===currentMonth?' active':''}" onclick="showMonth('${m}')">${monthNames[m][0]}<span style="font-size:10px;opacity:0.6;margin-left:4px;">${monthNames[m][1]}</span></button>`
     ).join('');
 }
 
@@ -933,7 +944,7 @@ function buildCalendars() {
             }
         });
 
-        let html = `<div class="calendar-section${idx===0?' active':''}" id="month-${m}">`;
+        let html = `<div class="calendar-section${m===currentMonth?' active':''}" id="month-${m}">`;
         html += `<div class="calendar-month-header"><div class="calendar-month-title"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">2026年 ${monthNames[m][1]}</div></div><div class="venue-legend"><div class="venue-legend-item"><div class="venue-dot" style="background:#4aa5ba;"></div>市原キャンパス</div><div class="venue-legend-item"><span style="display:inline-block;width:24px;height:12px;border-radius:8px;border:1.5px solid #d4a017;background:linear-gradient(135deg,#fff8eb,#fef0d0);"></span>セミナー</div></div></div>`;
         html += '<div class="calendar-grid">';
         // Headers (Mon-Sun)
@@ -983,15 +994,15 @@ function buildList() {
     container.innerHTML = months.map((m,idx)=>{
         const monthEvents = fe.filter(e=>e.date.startsWith(m));
         if(monthEvents.length === 0) return '';
-        let html = `<div class="calendar-section${idx===0?' active':''}" id="list-${m}">`;
+        let html = `<div class="calendar-section${m===currentMonth?' active':''}" id="list-${m}">`;
         html += `<div class="calendar-month-title" style="margin-bottom:12px;"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">2026年 ${monthNames[m][1]}</div></div>`;
         html += '<div class="event-list">';
         monthEvents.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
         monthEvents.forEach(ev=>{
-            const d = new Date(ev.date+'T00:00:00');
-            const day = d.getDate();
-            const dow = dowJa[d.getDay()];
-            const dowCls = d.getDay()===0?'sun':d.getDay()===6?'sat':'';
+            const dateInfo = getDateInfo(ev.date);
+            const day = dateInfo.day;
+            const dow = dateInfo.dow;
+            const dowCls = dateInfo.dowIndex===0?'sun':dateInfo.dowIndex===6?'sat':'';
             const [tag, tagCls] = genreTag(ev.circle);
             html += `<div class="event-card" onclick='openModal(${JSON.stringify(ev).replace(/'/g,"\\'")})'>`;
             html += `<div class="event-card-date"><div class="event-card-day">${day}</div><div class="event-card-dow ${dowCls}">${dow}</div></div>`;
@@ -999,7 +1010,7 @@ function buildList() {
             html += `<div class="event-card-title">${ev.title}</div>`;
             html += '<div class="event-card-meta">';
             html += `<span style="color:${venueColor(ev.venue)};">● ${ev.venue}</span>`;
-            html += `<span>${ev.time}～</span>`;
+            html += `<span>${formatTimeJa(ev.time)}</span>`;
             html += `<span class="modal-genre-tag ${tagCls}" style="padding:2px 8px;font-size:10px;">${tag}</span>`;
             html += '</div></div></div>';
         });
@@ -1009,6 +1020,7 @@ function buildList() {
 }
 
 function showMonth(m) {
+    currentMonth = m;
     const prefix = currentView==='calendar' ? 'month-' : 'list-';
     document.querySelectorAll('.calendar-section').forEach(s=>s.classList.remove('active'));
     document.querySelectorAll('.month-btn').forEach(b=>b.classList.remove('active'));
@@ -1030,9 +1042,7 @@ function setView(v) {
         document.getElementById('listView').classList.add('active');
         document.querySelectorAll('.view-btn')[1].classList.add('active');
     }
-    // Re-activate current month
-    const activeBtn = document.querySelector('.month-btn.active');
-    if(activeBtn) activeBtn.click();
+    showMonth(currentMonth);
 }
 
 function setFilter(venue, btn) {
@@ -1041,16 +1051,13 @@ function setFilter(venue, btn) {
     btn.classList.add('active');
     buildCalendars();
     buildList();
-    // Re-activate current month
-    const activeIdx = [...document.querySelectorAll('.month-btn')].findIndex(b=>b.classList.contains('active'));
-    if(activeIdx>=0) showMonth(months[activeIdx]);
+    showMonth(currentMonth);
 }
 
 function refreshFromEvents() {
-    const activeIdx = [...document.querySelectorAll('.month-btn')].findIndex(b=>b.classList.contains('active'));
     buildCalendars();
     buildList();
-    showMonth(months[activeIdx >= 0 ? activeIdx : 0]);
+    showMonth(currentMonth);
 }
 
 const campusInfo = {
@@ -1062,13 +1069,28 @@ function formatTimeJa(value) {
     if (!match) return text.replace(/～$/, '');
     return Number(match[1]) + '時' + match[2] + '分';
 }
+function getDateInfo(value) {
+    const text = String(value || '');
+    const iso = text.match(/(\d{4})-(\d{2})-(\d{2})/);
+    const date = iso ? new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3])) : new Date(text);
+    if (isNaN(date.getTime())) return {day: text.replace(/\s*GMT.*$/, ''), dow: '', dowIndex: -1};
+    return {day: date.getDate(), dow: dowJa[date.getDay()], dowIndex: date.getDay()};
+}
+function formatDateJa(value) {
+    const text = String(value || '');
+    const iso = text.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (iso) return Number(iso[1]) + '年' + Number(iso[2]) + '月' + Number(iso[3]) + '日';
+    const date = new Date(text);
+    if (!isNaN(date.getTime())) return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+    return text.replace(/\s*GMT.*$/, '');
+}
 function openModal(ev) {
     const [tag, tagCls] = genreTag(ev.circle);
     document.getElementById('modalGenre').innerHTML =
         `<span class="modal-genre-tag ${tagCls}">${ev.type==='seminar'?'⭐ ':''}${tag}</span>`;
     document.getElementById('modalTitle').textContent = ev.title;
     document.getElementById('modalInfo').innerHTML =
-        `<div><div class="info-label">開催日</div><div class="info-value">${ev.date.replace(/-/g,'.')}</div></div>` +
+        `<div><div class="info-label">開催日</div><div class="info-value">${formatDateJa(ev.date)}</div></div>` +
         `<div><div class="info-label">時間</div><div class="info-value">${formatTimeJa(ev.time)}</div></div>` +
         `<div><div class="info-label">会場</div><div class="info-value"><span class="modal-venue-badge"><span class="modal-venue-dot" style="background:${venueColor(ev.venue)};"></span>${ev.venue}</span></div></div>` +
         `<div><div class="info-label">サークル</div><div class="info-value" style="font-size:12px;">${ev.circle}</div></div>`;
@@ -1088,6 +1110,8 @@ loadEventsFromJson().then((loaded) => {
     buildMonthNav();
     buildCalendars();
     buildList();
+    setView(currentView);
+    showMonth(currentMonth);
 });
 window.addEventListener('message', e => {
     if (!e.data || e.data.type !== 'slmc-boso-events' || !Array.isArray(e.data.events)) return;

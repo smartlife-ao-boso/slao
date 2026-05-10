@@ -899,6 +899,7 @@ function openCustomerView() {
 loadEventsFromJson().then((loaded) => {
     if (!loaded) return;
     rebuildAll();
+    showMonth(currentMonth);
     if (isAdmin) renderAdminList();
 });
 
@@ -933,11 +934,17 @@ const monthNames = {4:'April',5:'May',6:'June',7:'July',8:'August',9:'September'
 const monthNamesJa = {4:'4\u6708',5:'5\u6708',6:'6\u6708',7:'7\u6708',8:'8\u6708',9:'9\u6708'};
 const dayLabels = ['\u6708','\u706B','\u6C34','\u6728','\u91D1','\u571F','\u65E5'];
 const months = [4,5,6,7,8,9];
+let currentMonth = getInitialMonth();
+
+function getInitialMonth() {
+    const nowMonth = new Date().getMonth() + 1;
+    return months.includes(nowMonth) ? nowMonth : months[0];
+}
 
 const navEl = document.getElementById('monthNav');
 months.forEach((m, i) => {
     const btn = document.createElement('button');
-    btn.className = 'month-btn' + (i===0?' active':'');
+    btn.className = 'month-btn' + (m===currentMonth?' active':'');
     btn.innerHTML = '<span class="month-en">' + monthNames[m] + '</span><span class="month-ja">' + monthNamesJa[m] + '</span>';
     btn.onclick = () => showMonth(m);
     navEl.appendChild(btn);
@@ -946,7 +953,7 @@ months.forEach((m, i) => {
 const calsEl = document.getElementById('calendars');
 months.forEach((month, i) => {
     const sec = document.createElement('div');
-    sec.className = 'calendar-section' + (i===0?' active':'');
+    sec.className = 'calendar-section' + (month===currentMonth?' active':'');
     sec.id = 'month-' + month;
 
     const t = document.createElement('div');
@@ -1022,6 +1029,7 @@ months.forEach((month, i) => {
 });
 
 function showMonth(m) {
+    currentMonth = m;
     document.querySelectorAll('.calendar-section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('month-'+m).classList.add('active');
@@ -1035,13 +1043,30 @@ function formatTimeJa(value) {
     return Number(match[1]) + '時' + match[2] + '分';
 }
 
+function formatDateJa(value) {
+    const text = String(value || '');
+    const iso = text.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (iso) return Number(iso[1]) + '年' + Number(iso[2]) + '月' + Number(iso[3]) + '日';
+    const date = new Date(text);
+    if (!isNaN(date.getTime())) return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+    return text.replace(/\s*GMT.*$/, '');
+}
+
+function getDateDow(value) {
+    const text = String(value || '');
+    const iso = text.match(/(\d{4})-(\d{2})-(\d{2})/);
+    const date = iso ? new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3])) : new Date(text);
+    if (isNaN(date.getTime())) return '';
+    return dowJa[date.getDay()];
+}
+
 function openModal(ev) {
     currentEvent = ev;
     const icon = venueIcon(ev.venue);
     document.getElementById('modalTitle').textContent = ev.title;
     document.getElementById('modalCircle').innerHTML = ev.type === 'seminar' ? '⭐ セミナー・体験会 / ' + ev.circle : ev.circle;
     document.getElementById('modalMeta').innerHTML =
-        '<div><span class="meta-label">\u{1F4C5} \u958B\u50AC\u65E5</span><span class="meta-value">' + ev.date + '</span></div>' +
+        '<div><span class="meta-label">\u{1F4C5} \u958B\u50AC\u65E5</span><span class="meta-value">' + formatDateJa(ev.date) + '</span></div>' +
         '<div><span class="meta-label">\u{1F552} \u6642\u9593</span><span class="meta-value">' + formatTimeJa(ev.time) + '</span></div>' +
         '<div><span class="meta-label">' + icon + ' \u4F1A\u5834</span><span class="meta-value">' + ev.venue + '</span></div>' +
         '<div><span class="meta-label">\u{1F464} \u5BFE\u8C61</span><span class="meta-value">' + (ev.member||'\u4E00\u822C') + '</span></div>';
@@ -1645,13 +1670,12 @@ function renderAdminList() {
     const sorted = [...events].sort((a,b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
     list.innerHTML = sorted.map(ev => {
         const origIdx = events.indexOf(ev);
-        const d = new Date(ev.date + 'T00:00:00');
-        const dow = dowJa[d.getDay()];
+        const dow = getDateDow(ev.date);
         return '<div class="admin-event-row" onclick="openEditModal(' + origIdx + ')">' +
-            '<div class="admin-ev-date">' + ev.date + ' (' + dow + ')</div>' +
+            '<div class="admin-ev-date">' + formatDateJa(ev.date) + (dow ? ' (' + dow + ')' : '') + '</div>' +
             '<div class="admin-ev-info">' +
                 '<div class="admin-ev-title">' + ev.title + '</div>' +
-                '<div class="admin-ev-meta">' + ev.time + ' ｜ ' + ev.venue + ' ｜ ' + ev.circle + '</div>' +
+                '<div class="admin-ev-meta">' + formatTimeJa(ev.time) + ' ｜ ' + ev.venue + ' ｜ ' + ev.circle + '</div>' +
             '</div>' +
             '<div class="admin-ev-arrow">›</div>' +
         '</div>';
@@ -1680,7 +1704,7 @@ function rebuildAll() {
     calsEl.innerHTML = '';
     months.forEach((month, i) => {
         const sec = document.createElement('div');
-        sec.className = 'calendar-section' + (i===0?' active':'');
+        sec.className = 'calendar-section' + (month===currentMonth?' active':'');
         sec.id = 'month-' + month;
         const t = document.createElement('div');
         t.className = 'calendar-title';
