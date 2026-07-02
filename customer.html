@@ -272,14 +272,12 @@ body{
     letter-spacing:0.06em;
 }
 .venue-legend{
-    position:absolute;
-    right:0;
-    top:50%;
-    transform:translateY(-50%);
     display:flex;
     flex-wrap:wrap;
+    justify-content:center;
     gap:12px;
     align-items:center;
+    margin-top:8px;
 }
 .venue-legend-item{
     display:flex;
@@ -376,6 +374,10 @@ body{
 .ev-chip.v-tomisato{background:#fdf4ea;border-color:rgba(233,168,103,0.26);}
 .ev-chip.v-narita{background:#ecf8fb;border-color:rgba(74,165,186,0.24);}
 .ev-chip.v-kamagaya{background:#edf8f1;border-color:rgba(93,163,122,0.22);}
+.ev-chip.v-mobara{background:#f5effb;border-color:rgba(154,117,200,0.24);}
+.ev-chip.v-goi{background:#fff4f4;border-color:rgba(215,120,120,0.24);}
+.ev-chip.v-chibant{background:#f2f7ff;border-color:rgba(96,131,196,0.22);}
+.ev-chip.v-togane{background:#f3f7e8;border-color:rgba(154,170,77,0.24);}
 .ev-chip.genre-ai{color:#0b6d8a;}
 .ev-chip.genre-security{color:#9c3f37;}
 .ev-chip.genre-business{color:#2d7d4c;}
@@ -390,6 +392,10 @@ body{
 .ev-chip.seminar.v-tomisato{background:linear-gradient(135deg,#fff6ec,#fbe8cf);color:#8c5820;}
 .ev-chip.seminar.v-narita{background:linear-gradient(135deg,#eef9fc,#dff3f8);color:#2d6f81;}
 .ev-chip.seminar.v-kamagaya{background:linear-gradient(135deg,#f1fbf3,#dff1e5);color:#2d7246;}
+.ev-chip.seminar.v-mobara{background:linear-gradient(135deg,#f8f1ff,#eadcf8);color:#684091;}
+.ev-chip.seminar.v-goi{background:linear-gradient(135deg,#fff4f4,#f9dfdf);color:#984b4b;}
+.ev-chip.seminar.v-chibant{background:linear-gradient(135deg,#f3f7ff,#e4ecfb);color:#385f9c;}
+.ev-chip.seminar.v-togane{background:linear-gradient(135deg,#f6fae9,#e8efcc);color:#69752d;}
 .chip-icon{flex-shrink:0;font-size:11px;margin-top:1px;}
 .chip-text{word-break:break-word;}
 .chip-reserve{
@@ -618,7 +624,7 @@ body{
 }
 .footer-campuses{
     display:grid;
-    grid-template-columns:minmax(280px, 420px);
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
     justify-content:center;
     gap:16px;
     max-width:960px;
@@ -635,6 +641,10 @@ body{
 .footer-campus.fc-tomisato{box-shadow:inset 0 3px 0 #e9a867, 0 12px 24px rgba(19,52,43,0.05);}
 .footer-campus.fc-narita{box-shadow:inset 0 3px 0 #4aa5ba, 0 12px 24px rgba(19,52,43,0.05);}
 .footer-campus.fc-kamagaya{box-shadow:inset 0 3px 0 #5da37a, 0 12px 24px rgba(19,52,43,0.05);}
+.footer-campus.fc-mobara{box-shadow:inset 0 3px 0 #9a75c8, 0 12px 24px rgba(19,52,43,0.05);}
+.footer-campus.fc-goi{box-shadow:inset 0 3px 0 #d77878, 0 12px 24px rgba(19,52,43,0.05);}
+.footer-campus.fc-chibant{box-shadow:inset 0 3px 0 #6083c4, 0 12px 24px rgba(19,52,43,0.05);}
+.footer-campus.fc-togane{box-shadow:inset 0 3px 0 #9aaa4d, 0 12px 24px rgba(19,52,43,0.05);}
 .fc-name{
     font-size:15px;
     font-weight:700;
@@ -676,13 +686,7 @@ body{
     .intro-card{padding:22px 18px 18px;border-radius:22px;}
     .month-nav{top:76px;padding:8px;border-radius:18px;}
     .calendar-month-header{position:relative;}
-    .venue-legend{
-        position:static;
-        transform:none;
-        justify-content:center;
-        margin-top:8px;
-        gap:10px;
-    }
+    .venue-legend{gap:10px;}
     .venue-legend-item{font-size:11px;gap:4px;}
     .venue-dot{width:12px;height:12px;}
     .month-year{font-size:30px;}
@@ -752,7 +756,7 @@ body{
     <div class="intro-card">
         <div class="intro-kicker">2026年度</div>
         <div class="intro-title">サークルスケジュール</div>
-        <div class="intro-text">市原キャンパスの講座予定を確認できます。</div>
+        <div class="intro-text">各開催地の講座予定を確認できます。</div>
     </div>
 
     <!-- 表示切替 -->
@@ -765,6 +769,12 @@ body{
     <div class="filter-bar" id="filterBar">
         <button class="filter-btn active" data-venue="all" onclick="setFilter('all',this)">すべて</button>
         <button class="filter-btn" data-venue="市原" onclick="setFilter('市原',this)">市原キャンパス</button>
+        <button class="filter-btn" data-venue="君津" onclick="setFilter('君津',this)">君津</button>
+        <button class="filter-btn" data-venue="木更津" onclick="setFilter('木更津',this)">木更津</button>
+        <button class="filter-btn" data-venue="茂原" onclick="setFilter('茂原',this)">茂原</button>
+        <button class="filter-btn" data-venue="市原五井" onclick="setFilter('市原五井',this)">市原五井</button>
+        <button class="filter-btn" data-venue="おゆみ野" onclick="setFilter('おゆみ野',this)">おゆみ野</button>
+        <button class="filter-btn" data-venue="東金" onclick="setFilter('東金',this)">東金</button>
     </div>
 
     <!-- 月ナビ -->
@@ -787,6 +797,30 @@ body{
             <div class="fc-shop">ピーシーデポスマートライフ市原インターBASE</div>
             <div class="fc-address">〒290-0050 千葉県市原市更級3丁目1番地1</div>
             <div class="fc-phone">0436-20-6511</div>
+        </div>
+        <div class="footer-campus fc-tomisato">
+            <div class="fc-name">君津</div>
+            <div class="fc-shop">SMART LIFE AO 房総校</div>
+        </div>
+        <div class="footer-campus fc-kamagaya">
+            <div class="fc-name">木更津</div>
+            <div class="fc-shop">SMART LIFE AO 房総校</div>
+        </div>
+        <div class="footer-campus fc-mobara">
+            <div class="fc-name">茂原</div>
+            <div class="fc-shop">SMART LIFE AO 房総校</div>
+        </div>
+        <div class="footer-campus fc-goi">
+            <div class="fc-name">市原五井</div>
+            <div class="fc-shop">SMART LIFE AO 房総校</div>
+        </div>
+        <div class="footer-campus fc-chibant">
+            <div class="fc-name">おゆみ野</div>
+            <div class="fc-shop">SMART LIFE AO 房総校</div>
+        </div>
+        <div class="footer-campus fc-togane">
+            <div class="fc-name">東金</div>
+            <div class="fc-shop">SMART LIFE AO 房総校</div>
         </div>
     </div>
     <div class="footer-note">
@@ -885,10 +919,22 @@ function shouldStartWithListView() {
 }
 
 function venueClass(v) {
+    if(v.includes('市原五井')) return 'v-goi';
     if(v.includes('市原')) return 'v-narita';
+    if(v.includes('君津')) return 'v-tomisato';
+    if(v.includes('木更津')) return 'v-kamagaya';
+    if(v.includes('茂原')) return 'v-mobara';
+    if(v.includes('おゆみ野')) return 'v-chibant';
+    if(v.includes('東金')) return 'v-togane';
     return '';
 }
 function venueIcon(v) {
+    if(v.includes('君津')) return '◆';
+    if(v.includes('木更津')) return '■';
+    if(v.includes('茂原')) return '▲';
+    if(v.includes('市原五井')) return '●';
+    if(v.includes('おゆみ野')) return '◇';
+    if(v.includes('東金')) return '☆';
     if(v.includes('市原')) return '★';
     return '★';
 }
@@ -902,7 +948,13 @@ function genreClass(c) {
     return 'genre-ai';
 }
 function venueColor(v) {
+    if(v.includes('市原五井')) return '#d77878';
     if(v.includes('市原')) return '#4aa5ba';
+    if(v.includes('君津')) return '#e9a867';
+    if(v.includes('木更津')) return '#5da37a';
+    if(v.includes('茂原')) return '#9a75c8';
+    if(v.includes('おゆみ野')) return '#6083c4';
+    if(v.includes('東金')) return '#9aaa4d';
     return '#ccc';
 }
 function genreTag(circle) {
@@ -954,7 +1006,7 @@ function buildCalendars() {
         });
 
         let html = `<div class="calendar-section${m===currentMonth?' active':''}" id="month-${m}">`;
-        html += `<div class="calendar-month-header"><div class="calendar-month-title"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">2026年 ${monthNames[m][1]}</div></div><div class="venue-legend"><div class="venue-legend-item"><div class="venue-dot" style="background:#4aa5ba;"></div>市原キャンパス</div><div class="venue-legend-item"><span style="display:inline-block;width:24px;height:12px;border-radius:8px;border:1.5px solid #d4a017;background:linear-gradient(135deg,#fff8eb,#fef0d0);"></span>セミナー</div></div></div>`;
+        html += `<div class="calendar-month-header"><div class="calendar-month-title"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">2026年 ${monthNames[m][1]}</div></div><div class="venue-legend"><div class="venue-legend-item"><div class="venue-dot" style="background:#4aa5ba;"></div>市原キャンパス</div><div class="venue-legend-item"><div class="venue-dot" style="background:#e9a867;"></div>君津</div><div class="venue-legend-item"><div class="venue-dot" style="background:#5da37a;"></div>木更津</div><div class="venue-legend-item"><div class="venue-dot" style="background:#9a75c8;"></div>茂原</div><div class="venue-legend-item"><div class="venue-dot" style="background:#d77878;"></div>市原五井</div><div class="venue-legend-item"><div class="venue-dot" style="background:#6083c4;"></div>おゆみ野</div><div class="venue-legend-item"><div class="venue-dot" style="background:#9aaa4d;"></div>東金</div><div class="venue-legend-item"><span style="display:inline-block;width:24px;height:12px;border-radius:8px;border:1.5px solid #d4a017;background:linear-gradient(135deg,#fff8eb,#fef0d0);"></span>セミナー</div></div></div>`;
         html += '<div class="calendar-grid">';
         // Headers (Mon-Sun)
         const headers = ['月','火','水','木','金','土','日'];
@@ -1070,7 +1122,13 @@ function refreshFromEvents() {
 }
 
 const campusInfo = {
-    '市原': { name:'市原キャンパス', shop:'ピーシーデポスマートライフ市原インターBASE', address:'〒290-0050 千葉県市原市更級3丁目1番地1', phone:'0436-20-6511' }
+    '市原': { name:'市原キャンパス', shop:'ピーシーデポスマートライフ市原インターBASE', address:'〒290-0050 千葉県市原市更級3丁目1番地1', phone:'0436-20-6511' },
+    '君津': { name:'君津', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
+    '木更津': { name:'木更津', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
+    '茂原': { name:'茂原', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
+    '市原五井': { name:'市原五井', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
+    'おゆみ野': { name:'おゆみ野', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
+    '東金': { name:'東金', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' }
 };
 function formatTimeJa(value) {
     const text = String(value || '');

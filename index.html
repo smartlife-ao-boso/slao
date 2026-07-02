@@ -343,6 +343,9 @@ body::after {
 .event-chip.narita { background: #ecf8fb; border-color: rgba(74, 165, 186, 0.24); }
 .event-chip.kamagaya { background: #edf8f1; border-color: rgba(93, 163, 122, 0.22); }
 .event-chip.chibant { background: #f2f7ff; border-color: rgba(96, 131, 196, 0.22); }
+.event-chip.mobara { background: #f5effb; border-color: rgba(154, 117, 200, 0.24); }
+.event-chip.goi { background: #fff4f4; border-color: rgba(215, 120, 120, 0.24); }
+.event-chip.togane { background: #f3f7e8; border-color: rgba(154, 170, 77, 0.24); }
 .event-chip.other { background: #f3f7f6; border-color: rgba(88, 118, 109, 0.16); }
 .event-chip.genre-ai { color: #0b6d8a; }
 .event-chip.genre-security { color: #9c3f37; }
@@ -360,6 +363,9 @@ body::after {
 .event-chip.seminar.narita { background: linear-gradient(135deg, #eef9fc, #dff3f8); color: #2d6f81; }
 .event-chip.seminar.kamagaya { background: linear-gradient(135deg, #f1fbf3, #dff1e5); color: #2d7246; }
 .event-chip.seminar.chibant { background: linear-gradient(135deg, #f3f7ff, #e4ecfb); color: #385f9c; }
+.event-chip.seminar.mobara { background: linear-gradient(135deg, #f8f1ff, #eadcf8); color: #684091; }
+.event-chip.seminar.goi { background: linear-gradient(135deg, #fff4f4, #f9dfdf); color: #984b4b; }
+.event-chip.seminar.togane { background: linear-gradient(135deg, #f6fae9, #e8efcc); color: #69752d; }
 .modal-overlay {
     display: none;
     position: fixed;
@@ -637,7 +643,7 @@ body::after {
         <h1>房総地域<br>2026 Event Calendar</h1>
         <p>&#x5B66;&#x3073;&#x306E;&#x30B5;&#x30FC;&#x30AF;&#x30EB;&#x6D3B;&#x52D5; 2026&#x5E74;&#x5EA6;</p>
         <div class="hero-meta">
-            <div class="hero-pill">市原キャンパス</div>
+            <div class="hero-pill">市原キャンパス / 君津 / 木更津 / 茂原 / 市原五井 / おゆみ野 / 東金</div>
             <div class="hero-pill">管理者用スケジュール編集</div>
         </div>
     </div>
@@ -645,6 +651,12 @@ body::after {
     <div class="legend">
         <div class="legend-item" style="margin-right:8px;font-weight:600;color:#9a8aaa;">&#x2591; &#x80CC;&#x666F;=&#x4F1A;&#x5834;</div>
         <div class="legend-item"><div class="legend-dot" style="background:#ecf8fb;border:1px solid #4aa5ba;"></div>&#x1F30A; 市原キャンパス</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#fdf4ea;border:1px solid #e9a867;"></div>君津</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#edf8f1;border:1px solid #5da37a;"></div>木更津</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f5effb;border:1px solid #9a75c8;"></div>茂原</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#fff4f4;border:1px solid #d77878;"></div>市原五井</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f2f7ff;border:1px solid #6083c4;"></div>おゆみ野</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f3f7e8;border:1px solid #9aaa4d;"></div>東金</div>
         <div style="width:1px;height:20px;background:#e0d8e8;margin:0 6px;"></div>
         <div class="legend-item" style="margin-right:8px;font-weight:600;color:#9a8aaa;">A &#x6587;&#x5B57;=&#x30B8;&#x30E3;&#x30F3;&#x30EB;</div>
         <div class="legend-item"><span style="color:#2868a8;font-weight:700;">&#x25CF;</span> AI&#x304F;&#x3089;&#x3057;&#x6D3B;&#x7528;</div>
@@ -913,7 +925,13 @@ loadEventsFromJson().then((loaded) => {
 });
 
 function venueClass(v) {
+    if (v.includes('市原五井')) return 'goi';
     if (v.includes('市原')) return 'narita';
+    if (v.includes('君津')) return 'tomisato';
+    if (v.includes('木更津')) return 'kamagaya';
+    if (v.includes('茂原')) return 'mobara';
+    if (v.includes('おゆみ野')) return 'chibant';
+    if (v.includes('東金')) return 'togane';
     if (v.includes('\u5bcc\u91cc')) return 'tomisato';
     if (v.includes('\u6210\u7530')) return 'narita';
     if (v.includes('\u938c\u30f6\u8c37') || v.includes('\u938c\u30b1\u8c37')) return 'kamagaya';
@@ -932,6 +950,12 @@ function genreClass(c) {
 }
 
 function venueIcon(v) {
+    if (v.includes('君津')) return '\u25C6';
+    if (v.includes('木更津')) return '\u25A0';
+    if (v.includes('茂原')) return '\u25B2';
+    if (v.includes('市原五井')) return '\u25CF';
+    if (v.includes('おゆみ野')) return '\u25C7';
+    if (v.includes('東金')) return '\u2606';
     if (v.includes('\u5bcc\u91cc')) return '\u{1F338}';
     if (v.includes('\u6210\u7530')) return '\u{1F40C}';
     if (v.includes('\u938c\u30f6\u8c37') || v.includes('\u938c\u30b1\u8c37')) return '\u{1F33C}';
@@ -1872,6 +1896,12 @@ window.addEventListener('beforeunload', (e) => {
                 <label style="font-size:12px;color:#a090b0;display:block;margin-bottom:4px;">会場</label>
                 <select id="editVenue" style="width:100%;padding:10px 12px;border:1.5px solid #e0d8e8;border-radius:12px;font-size:15px;font-family:inherit;background:#faf8fc;">
                     <option value="市原">市原</option>
+                    <option value="君津">君津</option>
+                    <option value="木更津">木更津</option>
+                    <option value="茂原">茂原</option>
+                    <option value="市原五井">市原五井</option>
+                    <option value="おゆみ野">おゆみ野</option>
+                    <option value="東金">東金</option>
                 </select>
             </div>
             <div style="margin-bottom:14px;">
