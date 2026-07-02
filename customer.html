@@ -800,27 +800,39 @@ body{
         </div>
         <div class="footer-campus fc-tomisato">
             <div class="fc-name">君津</div>
-            <div class="fc-shop">SMART LIFE AO 房総校</div>
+            <div class="fc-shop">パソコンクリニック ケーズデンキ 君津店内店</div>
+            <div class="fc-address">〒299-1151 千葉県君津市中野4丁目11番7号</div>
+            <div class="fc-phone">0439-50-0371</div>
         </div>
         <div class="footer-campus fc-kamagaya">
             <div class="fc-name">木更津</div>
-            <div class="fc-shop">SMART LIFE AO 房総校</div>
+            <div class="fc-shop">パソコンクリニック ケーズデンキ 木更津店内店</div>
+            <div class="fc-address">〒292-0038 千葉県木更津市ほたる野4丁目3番3</div>
+            <div class="fc-phone">0438-30-5185</div>
         </div>
         <div class="footer-campus fc-mobara">
             <div class="fc-name">茂原</div>
-            <div class="fc-shop">SMART LIFE AO 房総校</div>
+            <div class="fc-shop">ピーシーデポスマートライフ 茂原 Club Lounge</div>
+            <div class="fc-address">〒297-0023 千葉県茂原市千代田町1-3-12</div>
+            <div class="fc-phone">0475-20-5621</div>
         </div>
         <div class="footer-campus fc-goi">
             <div class="fc-name">市原五井</div>
-            <div class="fc-shop">SMART LIFE AO 房総校</div>
+            <div class="fc-shop">パソコンクリニック ケーズデンキ 市原五井店内店</div>
+            <div class="fc-address">〒290-0050 千葉県市原市更級4丁目1番地1</div>
+            <div class="fc-phone">0436-20-1501</div>
         </div>
         <div class="footer-campus fc-chibant">
             <div class="fc-name">おゆみ野</div>
-            <div class="fc-shop">SMART LIFE AO 房総校</div>
+            <div class="fc-shop">パソコンクリニック ケーズデンキ おゆみ野店内店</div>
+            <div class="fc-address">〒266-0032 千葉県千葉市緑区おゆみ野中央9丁目19番</div>
+            <div class="fc-phone">043-300-5191</div>
         </div>
         <div class="footer-campus fc-togane">
             <div class="fc-name">東金</div>
-            <div class="fc-shop">SMART LIFE AO 房総校</div>
+            <div class="fc-shop">ピーシーデポスマートライフ東金Club Lounge</div>
+            <div class="fc-address">〒283-0001 千葉県東金市家之子483-1</div>
+            <div class="fc-phone">0475-86-7390</div>
         </div>
     </div>
     <div class="footer-note">
@@ -1123,12 +1135,12 @@ function refreshFromEvents() {
 
 const campusInfo = {
     '市原': { name:'市原キャンパス', shop:'ピーシーデポスマートライフ市原インターBASE', address:'〒290-0050 千葉県市原市更級3丁目1番地1', phone:'0436-20-6511' },
-    '君津': { name:'君津', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
-    '木更津': { name:'木更津', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
-    '茂原': { name:'茂原', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
-    '市原五井': { name:'市原五井', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
-    'おゆみ野': { name:'おゆみ野', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' },
-    '東金': { name:'東金', shop:'SMART LIFE AO 房総校', address:'', phone:'0436-20-6511' }
+    '君津': { name:'君津', shop:'パソコンクリニック ケーズデンキ 君津店内店', address:'〒299-1151 千葉県君津市中野4丁目11番7号', phone:'0439-50-0371' },
+    '木更津': { name:'木更津', shop:'パソコンクリニック ケーズデンキ 木更津店内店', address:'〒292-0038 千葉県木更津市ほたる野4丁目3番3', phone:'0438-30-5185' },
+    '茂原': { name:'茂原', shop:'ピーシーデポスマートライフ 茂原 Club Lounge', address:'〒297-0023 千葉県茂原市千代田町1-3-12', phone:'0475-20-5621' },
+    '市原五井': { name:'市原五井', shop:'パソコンクリニック ケーズデンキ 市原五井店内店', address:'〒290-0050 千葉県市原市更級4丁目1番地1', phone:'0436-20-1501' },
+    'おゆみ野': { name:'おゆみ野', shop:'パソコンクリニック ケーズデンキ おゆみ野店内店', address:'〒266-0032 千葉県千葉市緑区おゆみ野中央9丁目19番', phone:'043-300-5191' },
+    '東金': { name:'東金', shop:'ピーシーデポスマートライフ東金Club Lounge', address:'〒283-0001 千葉県東金市家之子483-1', phone:'0475-86-7390' }
 };
 function formatTimeJa(value) {
     const text = String(value || '');
@@ -1163,7 +1175,7 @@ function openModal(ev) {
         `<div><div class="info-label">サークル</div><div class="info-value" style="font-size:12px;">${ev.circle}</div></div>`;
     const ci = campusInfo[ev.venue] || campusInfo['市原'];
     document.getElementById('ctaPhone').textContent = ci.phone;
-    document.getElementById('ctaLocation').innerHTML = ci.name + '<br>' + ci.shop;
+    document.getElementById('ctaLocation').innerHTML = ci.name + '<br>' + ci.shop + (ci.address ? '<br>' + ci.address : '');
     document.getElementById('modal').classList.add('show');
 }
 function closeModal() {
