@@ -1173,7 +1173,8 @@ function openModal(ev) {
         `<div><div class="info-label">開催日</div><div class="info-value">${formatDateJa(ev.date)}</div></div>` +
         `<div><div class="info-label">時間</div><div class="info-value">${formatTimeJa(ev.time)}</div></div>` +
         `<div><div class="info-label">会場</div><div class="info-value"><span class="modal-venue-badge"><span class="modal-venue-dot" style="background:${venueColor(ev.venue)};"></span>${ev.venue}</span></div></div>` +
-        `<div><div class="info-label">サークル</div><div class="info-value" style="font-size:12px;">${ev.circle}</div></div>`;
+        `<div><div class="info-label">サークル</div><div class="info-value" style="font-size:12px;">${ev.circle}</div></div>` +
+        (ev.member ? `<div><div class="info-label">講師・対象・詳細</div><div class="info-value" style="font-size:12px;line-height:1.7;">${ev.member}</div></div>` : '');
     const ci = campusInfo[ev.venue] || campusInfo['市原'];
     document.getElementById('ctaPhone').textContent = ci.phone;
     document.getElementById('ctaLocation').innerHTML = ci.name + '<br>' + ci.shop + (ci.address ? '<br>' + ci.address : '');
