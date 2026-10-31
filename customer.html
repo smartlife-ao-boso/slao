@@ -910,11 +910,12 @@ function showEventsLoadError(error) {
     if (list) list.innerHTML = message;
 }
 
-const months = ['2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10'];
+const months = ['2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12','2027-01','2027-02','2027-03'];
 const monthNames = {
     '2026-04':['April','4月'],'2026-05':['May','5月'],'2026-06':['June','6月'],
     '2026-07':['July','7月'],'2026-08':['August','8月'],'2026-09':['September','9月'],
-    '2026-10':['October','10月']
+    '2026-10':['October','10月'],'2026-11':['November','11月'],'2026-12':['December','12月'],
+    '2027-01':['January','1月'],'2027-02':['February','2月'],'2027-03':['March','3月']
 };
 const dowJa = ['日','月','火','水','木','金','土'];
 let currentFilter = 'all';
@@ -1019,7 +1020,7 @@ function buildCalendars() {
         });
 
         let html = `<div class="calendar-section${m===currentMonth?' active':''}" id="month-${m}">`;
-        html += `<div class="calendar-month-header"><div class="calendar-month-title"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">2026年 ${monthNames[m][1]}</div></div><div class="venue-legend"><div class="venue-legend-item"><div class="venue-dot" style="background:#4aa5ba;"></div>市原キャンパス</div><div class="venue-legend-item"><div class="venue-dot" style="background:#e9a867;"></div>君津</div><div class="venue-legend-item"><div class="venue-dot" style="background:#5da37a;"></div>木更津</div><div class="venue-legend-item"><div class="venue-dot" style="background:#9a75c8;"></div>茂原</div><div class="venue-legend-item"><div class="venue-dot" style="background:#d77878;"></div>市原五井</div><div class="venue-legend-item"><div class="venue-dot" style="background:#6083c4;"></div>おゆみ野</div><div class="venue-legend-item"><div class="venue-dot" style="background:#9aaa4d;"></div>東金</div><div class="venue-legend-item"><span style="display:inline-block;width:24px;height:12px;border-radius:8px;border:1.5px solid #d4a017;background:linear-gradient(135deg,#fff8eb,#fef0d0);"></span>セミナー</div></div></div>`;
+        html += `<div class="calendar-month-header"><div class="calendar-month-title"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">${m.slice(0,4)}年 ${monthNames[m][1]}</div></div><div class="venue-legend"><div class="venue-legend-item"><div class="venue-dot" style="background:#4aa5ba;"></div>市原キャンパス</div><div class="venue-legend-item"><div class="venue-dot" style="background:#e9a867;"></div>君津</div><div class="venue-legend-item"><div class="venue-dot" style="background:#5da37a;"></div>木更津</div><div class="venue-legend-item"><div class="venue-dot" style="background:#9a75c8;"></div>茂原</div><div class="venue-legend-item"><div class="venue-dot" style="background:#d77878;"></div>市原五井</div><div class="venue-legend-item"><div class="venue-dot" style="background:#6083c4;"></div>おゆみ野</div><div class="venue-legend-item"><div class="venue-dot" style="background:#9aaa4d;"></div>東金</div><div class="venue-legend-item"><span style="display:inline-block;width:24px;height:12px;border-radius:8px;border:1.5px solid #d4a017;background:linear-gradient(135deg,#fff8eb,#fef0d0);"></span>セミナー</div></div></div>`;
         html += '<div class="calendar-grid">';
         // Headers (Mon-Sun)
         const headers = ['月','火','水','木','金','土','日'];
@@ -1069,7 +1070,7 @@ function buildList() {
         const monthEvents = fe.filter(e=>e.date.startsWith(m));
         if(monthEvents.length === 0) return '';
         let html = `<div class="calendar-section${m===currentMonth?' active':''}" id="list-${m}">`;
-        html += `<div class="calendar-month-title" style="margin-bottom:12px;"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">2026年 ${monthNames[m][1]}</div></div>`;
+        html += `<div class="calendar-month-title" style="margin-bottom:12px;"><div class="month-year">${monthNames[m][0]}</div><div class="month-ja">${m.slice(0,4)}年 ${monthNames[m][1]}</div></div>`;
         html += '<div class="event-list">';
         monthEvents.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
         monthEvents.forEach(ev=>{

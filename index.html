@@ -963,10 +963,11 @@ function venueIcon(v) {
     return '\u2605';
 }
 
-const monthNames = {4:'April',5:'May',6:'June',7:'July',8:'August',9:'September',10:'October'};
-const monthNamesJa = {4:'4\u6708',5:'5\u6708',6:'6\u6708',7:'7\u6708',8:'8\u6708',9:'9\u6708',10:'10\u6708'};
+const monthNames = {4:'April',5:'May',6:'June',7:'July',8:'August',9:'September',10:'October',11:'November',12:'December',1:'January',2:'February',3:'March'};
+const monthNamesJa = Object.fromEntries(Array.from({length:12}, (_, i) => [i + 1, (i + 1) + '月']));
 const dayLabels = ['\u6708','\u706B','\u6C34','\u6728','\u91D1','\u571F','\u65E5'];
-const months = [4,5,6,7,8,9,10];
+const months = [4,5,6,7,8,9,10,11,12,1,2,3];
+function yearForMonth(month) { return month <= 3 ? 2027 : 2026; }
 let currentMonth = getInitialMonth();
 
 function getInitialMonth() {
@@ -991,7 +992,7 @@ months.forEach((month, i) => {
 
     const t = document.createElement('div');
     t.className = 'calendar-title';
-    t.innerHTML = '<span class="cal-month-en">' + monthNames[month] + '</span><span class="cal-month-ja">2026\u5E74 ' + monthNamesJa[month] + '</span>';
+    t.innerHTML = '<span class="cal-month-en">' + monthNames[month] + '</span><span class="cal-month-ja">' + yearForMonth(month) + '年 ' + monthNamesJa[month] + '</span>';
     sec.appendChild(t);
 
     const grid = document.createElement('div');
@@ -1004,14 +1005,14 @@ months.forEach((month, i) => {
         grid.appendChild(h);
     });
 
-    const firstDay = new Date(2026, month-1, 1);
-    const lastDate = new Date(2026, month, 0).getDate();
+    const firstDay = new Date(yearForMonth(month), month-1, 1);
+    const lastDate = new Date(yearForMonth(month), month, 0).getDate();
     const startDow = (firstDay.getDay() + 6) % 7; // 月曜=0, 日曜=6
 
     const me = {};
     events.forEach(ev => {
         const d = new Date(ev.date);
-        if (d.getMonth()+1 === month) {
+        if (d.getFullYear() === yearForMonth(month) && d.getMonth()+1 === month) {
             const day = d.getDate();
             if (!me[day]) me[day] = [];
             me[day].push(ev);
@@ -1741,7 +1742,7 @@ function rebuildAll() {
         sec.id = 'month-' + month;
         const t = document.createElement('div');
         t.className = 'calendar-title';
-        t.innerHTML = '<span class="cal-month-en">' + monthNames[month] + '</span><span class="cal-month-ja">2026年 ' + monthNamesJa[month] + '</span>';
+        t.innerHTML = '<span class="cal-month-en">' + monthNames[month] + '</span><span class="cal-month-ja">' + yearForMonth(month) + '年 ' + monthNamesJa[month] + '</span>';
         sec.appendChild(t);
         const grid = document.createElement('div');
         grid.className = 'calendar-grid';
@@ -1751,13 +1752,13 @@ function rebuildAll() {
             h.textContent = d;
             grid.appendChild(h);
         });
-        const firstDay = new Date(2026, month-1, 1);
-        const lastDate = new Date(2026, month, 0).getDate();
+        const firstDay = new Date(yearForMonth(month), month-1, 1);
+        const lastDate = new Date(yearForMonth(month), month, 0).getDate();
         const startDow = (firstDay.getDay() + 6) % 7;
         const me = {};
         events.forEach(ev => {
             const dd = new Date(ev.date);
-            if (dd.getMonth()+1 === month) {
+            if (dd.getFullYear() === yearForMonth(month) && dd.getMonth()+1 === month) {
                 const day = dd.getDate();
                 if (!me[day]) me[day] = [];
                 me[day].push(ev);
