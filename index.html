@@ -626,6 +626,8 @@ body::after {
     .modal-links { flex-direction: column; }
 }
 </style>
+<link rel="stylesheet" href="calendar-design.css">
+<script src="month-navigation.js"></script>
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZD6PC66M41"></script>
@@ -639,8 +641,8 @@ body::after {
 <body>
 <div class="container">
     <div class="hero">
-        <div class="hero-kicker">BOSO LEARNING CIRCLES 2026</div>
-        <h1>房総地域<br>2026 Event Calendar</h1>
+        <div class="hero-kicker">SMART LIFE AO 房総校 / 2026年度</div>
+        <h1>学びがつながる、<br>房総のカレンダー。</h1>
         <p>&#x5B66;&#x3073;&#x306E;&#x30B5;&#x30FC;&#x30AF;&#x30EB;&#x6D3B;&#x52D5; 2026&#x5E74;&#x5EA6;</p>
         <div class="hero-meta">
             <div class="hero-pill">市原キャンパス / 君津 / 木更津 / 茂原 / 市原五井 / おゆみ野 / 東金</div>
@@ -648,7 +650,7 @@ body::after {
         </div>
     </div>
 
-    <div class="legend">
+    <details class="legend-details"><summary>会場・ジャンルの色分けを見る</summary><div class="legend">
         <div class="legend-item" style="margin-right:8px;font-weight:600;color:#9a8aaa;">&#x2591; &#x80CC;&#x666F;=&#x4F1A;&#x5834;</div>
         <div class="legend-item"><div class="legend-dot" style="background:#ecf8fb;border:1px solid #4aa5ba;"></div>&#x1F30A; 市原キャンパス</div>
         <div class="legend-item"><div class="legend-dot" style="background:#fdf4ea;border:1px solid #e9a867;"></div>君津</div>
@@ -668,7 +670,8 @@ body::after {
         <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(135deg,#fef9e7,#fdf2d0);border:2px solid #d4a017;"></div>⭐ セミナー・体験会</div>
     </div>
 
-    <div class="month-nav" id="monthNav"></div>
+    </details>
+    <div class="month-nav" id="monthNav" aria-label="表示する月"></div>
     <div id="calendars"></div>
     <div class="footer"><p>&#x2727; &#x623F;&#x7DCF;&#x5730;&#x57DF; &#x5B66;&#x3073;&#x306E;&#x30B5;&#x30FC;&#x30AF;&#x30EB;&#x6D3B;&#x52D5; 2026&#x5E74;&#x5EA6; &#x2727;</p></div>
 </div>
@@ -971,18 +974,14 @@ function yearForMonth(month) { return month <= 3 ? 2027 : 2026; }
 let currentMonth = getInitialMonth();
 
 function getInitialMonth() {
-    const nowMonth = new Date().getMonth() + 1;
-    return months.includes(nowMonth) ? nowMonth : months[0];
+    return CalendarMonthNav.initial(months, m => `${yearForMonth(m)}-${String(m).padStart(2, '0')}`);
 }
 
-const navEl = document.getElementById('monthNav');
-months.forEach((m, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'month-btn' + (m===currentMonth?' active':'');
-    btn.innerHTML = '<span class="month-en">' + monthNames[m] + '</span><span class="month-ja">' + monthNamesJa[m] + '</span>';
-    btn.onclick = () => showMonth(m);
-    navEl.appendChild(btn);
-});
+function buildMonthNav() {
+    CalendarMonthNav.render(document.getElementById('monthNav'), months, currentMonth,
+        m => `${yearForMonth(m)}-${String(m).padStart(2, '0')}`, showMonth);
+}
+buildMonthNav();
 
 const calsEl = document.getElementById('calendars');
 months.forEach((month, i) => {
@@ -1067,7 +1066,7 @@ function showMonth(m) {
     document.querySelectorAll('.calendar-section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('month-'+m).classList.add('active');
-    document.querySelectorAll('.month-btn')[months.indexOf(m)].classList.add('active');
+    buildMonthNav();
 }
 
 function formatTimeJa(value) {

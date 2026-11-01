@@ -724,6 +724,8 @@ body{
     .fc-phone{font-size:17px;}
 }
 </style>
+<link rel="stylesheet" href="calendar-design.css">
+<script src="month-navigation.js"></script>
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZD6PC66M41"></script>
@@ -755,8 +757,8 @@ body{
 
     <div class="intro-card">
         <div class="intro-kicker">2026年度</div>
-        <div class="intro-title">サークルスケジュール</div>
-        <div class="intro-text">各開催地の講座予定を確認できます。</div>
+        <h1 class="intro-title">次の学びを、<br>この街で。</h1>
+        <div class="intro-text">房総の7つの会場から、あなたに合う講座を。<br>会場と月を選んで、気になる予定を見つけましょう。</div>
     </div>
 
     <!-- 表示切替 -->
@@ -923,9 +925,7 @@ let currentView = shouldStartWithListView() ? 'list' : 'calendar';
 let currentMonth = getInitialMonth();
 
 function getInitialMonth() {
-    const now = new Date();
-    const key = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
-    return months.includes(key) ? key : months[0];
+    return CalendarMonthNav.initial(months, m => m);
 }
 
 function shouldStartWithListView() {
@@ -988,10 +988,7 @@ function filteredEvents() {
 
 // 月ナビ生成
 function buildMonthNav() {
-    const nav = document.getElementById('monthNav');
-    nav.innerHTML = months.map((m,i)=>
-        `<button class="month-btn${m===currentMonth?' active':''}" onclick="showMonth('${m}')">${monthNames[m][0]}<span style="font-size:10px;opacity:0.6;margin-left:4px;">${monthNames[m][1]}</span></button>`
-    ).join('');
+    CalendarMonthNav.render(document.getElementById('monthNav'), months, currentMonth, m => m, showMonth);
 }
 
 // カレンダー生成
@@ -1102,7 +1099,7 @@ function showMonth(m) {
     const el = document.getElementById(prefix+m);
     if(el) el.classList.add('active');
     const idx = months.indexOf(m);
-    document.querySelectorAll('.month-btn')[idx]?.classList.add('active');
+    buildMonthNav();
 }
 
 function setView(v) {
@@ -1187,6 +1184,7 @@ function closeModal() {
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
 // 初期化
+buildMonthNav();
 loadEventsFromJson().then((loaded) => {
     if (!loaded) return;
     buildMonthNav();
